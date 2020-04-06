@@ -47,8 +47,9 @@ bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
 bouton_quitter.pack(side="bottom")
 bouton_accueil=Button(fenetre,text="Accueil")
 bouton_accueil.pack(side="bottom")
-cadre = Frame(fenetre, width=1920, height=1080)
+cadre = Frame(fenetre, width=1920, height=1080,)
 cadre.pack(side="bottom", fill=BOTH)
+fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
 
