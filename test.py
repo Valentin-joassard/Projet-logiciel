@@ -31,7 +31,9 @@ canvas = Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 #coords = (0, 0)
 # création du rectangle
-p=PhotoImage(file='image/rocket.png')
+bg=PhotoImage(file='image/espace1.png')
+background= canvas.create_image(370,250,image=bg)
+p=PhotoImage(file='image/fusée.png')
 player =  canvas.create_image(490,550,image=p)
 # ajout du bond sur les touches du clavier
 canvas.focus_set()
