@@ -52,4 +52,3 @@ cadre.pack(side="bottom", fill=BOTH)
 fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
-
