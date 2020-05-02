@@ -20,8 +20,8 @@ def clavier(event):
         shot = canvas.create_image(coords[0],coords[1]-25,image=t)
         xTir = coords[0]
         yTir = coords[1]
-        Liste.append(xTir)
-        Liste.append(yTir)
+        Liste.append([xTir,yTir])
+        #Liste.append(yTir)
         print(Liste)
     elif move =="Down":
         canvas.coords(shot,coords[0],coords[1]-25)
