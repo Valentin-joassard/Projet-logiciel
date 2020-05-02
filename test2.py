@@ -23,8 +23,11 @@ def clavier(event):
         Liste.append(xTir)
         Liste.append(yTir)
         print(Liste)
-        while(yTir!=0):
-            
+    elif move =="Down":
+        canvas.coords(shot,coords[0],coords[1]-25)
+    #while(yTir!=0):
+    #    canvas.coords(shot,coords[0],coords[1]-25)
+    #    yTir = coords[1]-25            
             
     #print(coords)
     canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
