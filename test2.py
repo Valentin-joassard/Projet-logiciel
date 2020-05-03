@@ -4,7 +4,7 @@ from random import randint
 
 def deplacement():
 
-    global dx, dy, Var1
+    global dx, dy, Var1, Var2
     x=5
 
 
@@ -17,6 +17,7 @@ def deplacement():
         if canvas.coords(shot)[1]<50:
             canvas.delete(shot)
             Var1=1
+            Var2=0
             #On repete cette fonction
         
 
@@ -78,7 +79,7 @@ def creer_bloc():
     return type and valeur
 
 def clavier(event):
-    global coords, shot, Var1
+    global coords, shot, Var1, Var2
     gauche = -25
     droite = 25
     move = event.keysym
@@ -92,12 +93,15 @@ def clavier(event):
 
         Var1=0
         #t=PhotoImage(file="image/carre.png")
-        shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
+        
         #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
-        deplacement()
-        xTir = coords[0]
-        yTir = coords[1]
-        TIR.append([xTir,yTir])
+        if Var2==0:
+            shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
+            Var2=1
+            deplacement()
+            xTir = coords[0]
+            yTir = coords[1]
+            TIR.append([xTir,yTir])
         #TIR.append(yTir)
         #print(TIR)
     #elif move =="Down":
@@ -107,12 +111,13 @@ def clavier(event):
     #    yTir = coords[1]-25            
          
     #print(coords)
-    canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
-    
-    fenetre.update()
+        canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
+        
+        fenetre.update()
 dx = 0
 dy = -5
 Var1=0
+Var2=0
 fenetre = Tk()
 TIR =[]
 # création du canvas
