@@ -1,8 +1,51 @@
 from tkinter import *
 from tkinter import Tk ,Canvas
+from random import randint
 
-fenetre = Tk()
-Liste =[]
+def supprimer_bloc(BLOC,num_list_del):
+    del BLOC[num_list_del]
+    return BLOC
+
+def lose(BLOC,fin):
+    nbr_list_max=len(BLOC)
+    nbr_list = 0
+    while nbr_list!=nbr_list_max:
+        if  BLOC [nbr_list][0]==0:
+            fin=fin+1
+        nbr_list= nbr_list + 1
+        if fin == 3:
+            print("perdu")
+    return fin
+
+
+def Descendre_Bloc(BLOC):
+    nbr_list_max=len(BLOC)
+    nbr_list = 0
+	
+    while nbr_list!=nbr_list_max:
+	    BLOC [nbr_list][1]=BLOC [nbr_list][1] -1
+	    nbr_list= nbr_list + 1
+    return BLOC
+
+def creer_bloc():
+    proba = randint(0,100)
+    #print(proba)
+    if (proba >=0 and proba<=70):
+        type = 0
+        valeur = 1
+    if (proba >70 and proba<=80):
+        type = 1
+        valeur = 1
+    if (proba >80 and proba<=90):
+        type = 2
+        valeur = 1
+    if (proba >90 and proba<=100):
+        type = 3
+        valeur = 1
+    #print(type)
+    #print(valeur)
+    return type and valeur
+
 def clavier(event):
     global coords
     gauche = -25
@@ -34,6 +77,9 @@ def clavier(event):
     canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
     
     fenetre.update()
+
+fenetre = Tk()
+Liste =[]
 # création du canvas
 canvas = Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
@@ -58,6 +104,6 @@ bouton_accueil.configure( width=15, height=3,  )
 bouton_quitter.configure( width=15, height=3,  )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
-#fenetre.attributes('-fullscreen', True)
+fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
