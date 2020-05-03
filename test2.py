@@ -2,6 +2,18 @@ from tkinter import *
 from tkinter import Tk ,Canvas
 from random import randint
 
+def deplacement():
+    global dx, dy
+    #if (canvas.coords(shot)[1]!=0):
+        #print("oui")
+   
+    #On deplace la balle :
+    canvas.move(shot,dx,dy)
+    
+    #On repete cette fonction
+    fenetre.after(20,deplacement)
+dx = 0
+dy = -5
 def supprimer_bloc(BLOC,num_list_del):
     del BLOC[num_list_del]
     return BLOC
@@ -47,7 +59,7 @@ def creer_bloc():
     return type and valeur
 
 def clavier(event):
-    global coords
+    global coords, shot
     gauche = -25
     droite = 25
     move = event.keysym
@@ -59,27 +71,27 @@ def clavier(event):
         canvas.move(player, gauche, 0)
     elif move == "Up":
         t=PhotoImage(file="image/carre.png")
-        #print(coords)
-        shot = canvas.create_image(coords[0],coords[1]-25,image=t)
+        shot = canvas.create_oval(450,450,495,495,fill='red')
+        #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
+        deplacement()
         xTir = coords[0]
         yTir = coords[1]
-        Liste.append([xTir,yTir])
-        #Liste.append(yTir)
-        print(Liste)
-    elif move =="Down":
-        canvas.coords(shot,coords[0],coords[1]-25)
-
+        TIR.append([xTir,yTir])
+        #TIR.append(yTir)
+        print(TIR)
+    #elif move =="Down":
+     #   canvas.coords(shot,coords[0],coords[1]-25)
     #while(yTir!=0):
     #    canvas.coords(shot,coords[0],coords[1]-25)
     #    yTir = coords[1]-25            
-            
+         
     #print(coords)
     canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
     
     fenetre.update()
 
 fenetre = Tk()
-Liste =[]
+TIR =[]
 # création du canvas
 canvas = Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
@@ -89,6 +101,8 @@ bg=PhotoImage(file='image/espace1.png')
 background= canvas.create_image(370,250,image=bg)
 p=PhotoImage(file='image/rocket.png')
 player =  canvas.create_image(390,520,image=p)
+#shot = canvas.create_oval(20,20,40,40,fill='red')
+
 # ajout du bond sur les touches du clavier
 canvas.focus_set()
 canvas.bind("<Key>", clavier)
