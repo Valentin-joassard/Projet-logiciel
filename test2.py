@@ -25,9 +25,14 @@ def deplacement():
 
 def descente():
     global x,y
-
-    canvas.move(brick,x,y)
+    nb = 0
+    while(nb<len(BRICK)-1):
+        canvas.move(BRICK[nb],x,y)
+        nb +=1
+    print("nb",nb)
+    #canvas.move(BRICK[nb],x,y)
     fenetre.after(20,descente)
+    #print(BRICK)
 x=0
 y=5
 def supprimer_bloc(BLOC,num_list_del):
@@ -114,8 +119,10 @@ dx = 0
 dy = -5
 Var1=0
 Var2=0
+var3=0
 fenetre = Tk()
 TIR =[]
+BRICK= []
 # création du canvas
 canvas = Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
@@ -133,13 +140,17 @@ canvas.bind("<Key>", clavier)
 # création du canvas
 canvas.pack()
 def create_brick():
-    global brick,x1,x2
-    x1 = randint(80,700)
-    x2 = x1 + 30
-    brick = canvas.create_rectangle(x1,0,x2,10,fill="red")
-    fenetre.after(200,create_brick)
+    global brick,x1,x2,var3
+    if var3!=10:
+        x1 = randint(80,700)
+        x2 = x1 + 30
+        brick = canvas.create_rectangle(x1,0,x2,10,fill="red")
+        BRICK.append(brick)
+        fenetre.after(200,create_brick)
+        var3 +=1
 
 create_brick()
+descente()
 champ_label = Label(fenetre, text="Brick shooter")
 champ_label.pack()
 bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
