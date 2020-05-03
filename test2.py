@@ -15,10 +15,6 @@ def deplacement():
 dx = 0
 dy = -5
 
-def create_brick():
-    global brick
-
-    brick = canvas.create_rectangle
 
 def descente():
     global x,y
@@ -121,6 +117,14 @@ canvas.focus_set()
 canvas.bind("<Key>", clavier)
 # création du canvas
 canvas.pack()
+def create_brick():
+    global brick,x1,x2
+    x1 = randint(80,700)
+    x2 = x1 + 30
+    brick = canvas.create_rectangle(x1,0,x2,10,fill="red")
+    fenetre.after(200,create_brick)
+
+create_brick()
 champ_label = Label(fenetre, text="Brick shooter")
 champ_label.pack()
 bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
