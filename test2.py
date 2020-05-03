@@ -3,17 +3,23 @@ from tkinter import Tk ,Canvas
 from random import randint
 
 def deplacement():
-    global dx, dy
+
+    global dx, dy, Var1
+    x=5
+
+
     #if (canvas.coords(shot)[1]!=0):
         #print("oui")
-   
-    #On deplace la balle :
-    canvas.move(shot,dx,dy)
-    
-    #On repete cette fonction
-    fenetre.after(20,deplacement)
-dx = 0
-dy = -5
+    if Var1==0:
+        canvas.move(shot,dx,dy)
+        fenetre.after(x,deplacement)
+        #On deplace la balle :
+        if canvas.coords(shot)[1]<50:
+            canvas.delete(shot)
+            Var1=1
+            #On repete cette fonction
+        
+
 
 
 def descente():
@@ -68,7 +74,7 @@ def creer_bloc():
     return type and valeur
 
 def clavier(event):
-    global coords, shot
+    global coords, shot, Var1
     gauche = -25
     droite = 25
     move = event.keysym
@@ -79,6 +85,8 @@ def clavier(event):
         coords = (coords[0] -25, coords[1])
         canvas.move(player, gauche, 0)
     elif move == "Up":
+
+        Var1=0
         #t=PhotoImage(file="image/carre.png")
         shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
         #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
@@ -98,7 +106,9 @@ def clavier(event):
     canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
     
     fenetre.update()
-
+dx = 0
+dy = -5
+Var1=0
 fenetre = Tk()
 TIR =[]
 # création du canvas
@@ -135,6 +145,6 @@ bouton_accueil.configure( width=15, height=3,  )
 bouton_quitter.configure( width=15, height=3,  )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
-fenetre.attributes('-fullscreen', True)
+#fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
