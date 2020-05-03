@@ -14,6 +14,19 @@ def deplacement():
     fenetre.after(20,deplacement)
 dx = 0
 dy = -5
+
+def create_brick():
+    global brick
+
+    brick = canvas.create_rectangle
+
+def descente():
+    global x,y
+
+    canvas.move(brick,x,y)
+    fenetre.after(20,descente)
+x=0
+y=5
 def supprimer_bloc(BLOC,num_list_del):
     del BLOC[num_list_del]
     return BLOC
@@ -70,15 +83,15 @@ def clavier(event):
         coords = (coords[0] -25, coords[1])
         canvas.move(player, gauche, 0)
     elif move == "Up":
-        t=PhotoImage(file="image/carre.png")
-        shot = canvas.create_oval(450,450,495,495,fill='red')
+        #t=PhotoImage(file="image/carre.png")
+        shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
         #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
         deplacement()
         xTir = coords[0]
         yTir = coords[1]
         TIR.append([xTir,yTir])
         #TIR.append(yTir)
-        print(TIR)
+        #print(TIR)
     #elif move =="Down":
      #   canvas.coords(shot,coords[0],coords[1]-25)
     #while(yTir!=0):
