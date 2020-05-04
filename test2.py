@@ -14,7 +14,7 @@ Var1=0
 Var2=0
 var3=0
 fin=0
-
+score=0
 #---------------------------#
          #fonctions#
 #---------------------------#
@@ -26,7 +26,7 @@ def create_brick():
     x2 = x1 + 30
     brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
     BRICK.append(brick)
-    fenetre.after(3000,create_brick)
+    fenetre.after(1000,create_brick)
         
     
 
@@ -86,19 +86,21 @@ def destroy_bloc(shot):
         #fenetre.after(1,destroy_bloc(shot))
 
 def destroy_bloc2(shot):
-    global Var1,Var2
+    global Var1,Var2,score
     midShot = (canvas.coords(shot)[0] + canvas.coords(shot)[2])/2
     nb = -1
+    #print("mid",midShot)
+    #print("x1S",canvas.coords(shot)[0])
+    #print("x2S",canvas.coords(shot)[2])
+    #print("x1B",canvas.coords(BRICK[nb])[0])
+    #print("x2B",canvas.coords(BRICK[nb])[2])
     if canvas.coords(shot)!=[]:
         if(len(BRICK)!=0):
             while(nb<len(BRICK)-1):
                 #print(canvas.coords(shot)[1])
-                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3] and canvas.coords(BRICK[nb])[0]-10<=midShot and midShot<=canvas.coords(BRICK[nb])[2]+10):
-                    print("mid",midShot)
-                    print("x1S",canvas.coords(shot)[0])
-                    print("x2S",canvas.coords(shot)[2])
-                    print("x1B",canvas.coords(BRICK[nb])[0])
-                    print("x2B",canvas.coords(BRICK[nb])[2])
+                
+                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3] and canvas.coords(BRICK[nb])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb])[2]+20):
+                    
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
                     canvas.delete(shot)
                     canvas.delete(BRICK[nb])
@@ -106,6 +108,8 @@ def destroy_bloc2(shot):
                     nb +=1
                     Var1= 0
                     Var2=0
+                    score=score+1
+                    print("score :", score)
                 else:
                     nb+=1
                     Var1 =0
@@ -132,7 +136,7 @@ def descente():
             nb +=1
     
     #canvas.move(BRICK[nb],x,y)
-    fenetre.after(1000,descente)
+    fenetre.after(100,descente)
     #print(BRICK)
 
 def supprimer_bloc(BLOC,num_list_del):
