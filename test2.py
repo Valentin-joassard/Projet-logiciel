@@ -37,6 +37,7 @@ def deplacement():
         #print("oui")
     if Var1==0:
         canvas.move(shot,dx,dy)
+        destroy_bloc(shot)
         fenetre.after(x,deplacement)
         #On deplace la balle :
         if canvas.coords(shot)[1]<50:
@@ -44,14 +45,29 @@ def deplacement():
             Var1=1
             Var2=0
             #On repete cette fonction
-        
+
+def destroy_bloc(shot):
+    nb = -1
+    while(nb<len(BRICK)-1):
+        print(canvas.coords(shot)[1])
+        #if (canvas.coords(shot)[0]>canvas.coords(BRICK[nb])[0] and canvas.coords(BRICK[nb])[0]> canvas.coords(shot)[2] and canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3]):
+        if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[1]):
+            canvas.delete(shot)
+            canvas.delete(BRICK[nb])
+            del BRICK[nb]
+            nb +=1
+        else:
+            nb+=1
+
+    #fenetre.after(1,destroy_bloc(shot))
+
 def descente():
     global x,y
     nb = -1
     while(nb<len(BRICK)-1):
         print(canvas.coords(BRICK[nb])[1])
         if (canvas.coords(BRICK[nb])[1]==500):
-            print(canvas.coords(BRICK[nb])[1])
+            #print(canvas.coords(BRICK[nb])[1])
             canvas.delete(BRICK[nb])
             del BRICK[nb]
             nb+=1
@@ -59,6 +75,7 @@ def descente():
         else:
             canvas.move(BRICK[nb],x,y)
             nb +=1
+    
     #canvas.move(BRICK[nb],x,y)
     fenetre.after(1000,descente)
     #print(BRICK)
@@ -120,7 +137,6 @@ def clavier(event):
         coords = (coords[0] -25, coords[1])
         canvas.move(player, gauche, 0)
     elif move == "Up":
-
         Var1=0
         #t=PhotoImage(file="image/carre.png")
         
@@ -170,6 +186,7 @@ canvas.bind("<Key>", clavier)
 canvas.pack()
 create_brick()
 descente()
+#destroy_bloc()
 champ_label = Label(fenetre, text="Brick shooter")
 champ_label.pack()
 bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
