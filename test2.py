@@ -13,6 +13,7 @@ dy = -5
 Var1=0
 Var2=0
 var3=0
+fin=0
 
 #---------------------------#
          #fonctions#
@@ -25,7 +26,8 @@ def create_brick():
         x2 = x1 + 30
         brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
         BRICK.append(brick)
-        fenetre.after(2000,create_brick)
+        fenetre.after(8000,create_brick)
+        
         var3 +=1
 
 def deplacement():
@@ -46,16 +48,18 @@ def deplacement():
             #On repete cette fonction
         
 def descente():
-    global x,y
+    global x,y,fin
     nb = -1
+
     while(nb<len(BRICK)-1):
-        print(canvas.coords(BRICK[nb])[1])
+        #print(canvas.coords(BRICK[nb])[1])
         if (canvas.coords(BRICK[nb])[1]==500):
-            print(canvas.coords(BRICK[nb])[1])
+            #print(canvas.coords(BRICK[nb])[1])
             canvas.delete(BRICK[nb])
             del BRICK[nb]
             nb+=1
-
+            fin+=1
+            lose(fin)
         else:
             canvas.move(BRICK[nb],x,y)
             nb +=1
@@ -67,16 +71,11 @@ def supprimer_bloc(BLOC,num_list_del):
     del BLOC[num_list_del]
     return BLOC
 
-def lose(BLOC,fin):
-    nbr_list_max=len(BLOC)
-    nbr_list = 0
-    while nbr_list!=nbr_list_max:
-        if  BLOC [nbr_list][0]==0:
-            fin=fin+1
-        nbr_list= nbr_list + 1
-        if fin == 3:
-            print("perdu")
-    return fin
+def lose(fin):
+    print(fin)
+    if fin == 3:
+        print("perdu")
+        raise SystemExit
 
 
 
