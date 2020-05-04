@@ -49,8 +49,16 @@ def descente():
     global x,y
     nb = -1
     while(nb<len(BRICK)-1):
-        canvas.move(BRICK[nb],x,y)
-        nb +=1
+        print(canvas.coords(BRICK[nb])[1])
+        if (canvas.coords(BRICK[nb])[1]==500):
+            print(canvas.coords(BRICK[nb])[1])
+            canvas.delete(BRICK[nb])
+            del BRICK[nb]
+            nb+=1
+
+        else:
+            canvas.move(BRICK[nb],x,y)
+            nb +=1
     #canvas.move(BRICK[nb],x,y)
     fenetre.after(1000,descente)
     #print(BRICK)
@@ -69,6 +77,8 @@ def lose(BLOC,fin):
         if fin == 3:
             print("perdu")
     return fin
+
+
 
 def Descendre_Bloc(BLOC):
     nbr_list_max=len(BLOC)
