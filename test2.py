@@ -21,14 +21,14 @@ fin=0
 
 def create_brick():
     global brick,x1,x2,var3
-    if var3!=10:
-        x1 = randint(80,700)
-        x2 = x1 + 30
-        brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
-        BRICK.append(brick)
-        fenetre.after(8000,create_brick)
+    
+    x1 = randint(80,700)
+    x2 = x1 + 30
+    brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+    BRICK.append(brick)
+    fenetre.after(3000,create_brick)
         
-        var3 +=1
+    
 
 def deplacement():
 
@@ -39,29 +39,80 @@ def deplacement():
         #print("oui")
     if Var1==0:
         canvas.move(shot,dx,dy)
-        destroy_bloc(shot)
+        destroy_bloc2(shot)
         fenetre.after(x,deplacement)
+        #print(canvas.coords(shot))
+        Var1 = 1
+        Var2 = 0
+        if canvas.coords(shot) != []:
+            Var1 = 0
+            Var2 = 1
         #On deplace la balle :
-        if canvas.coords(shot)[1]<50:
-            canvas.delete(shot)
-            Var1=1
-            Var2=0
-            #On repete cette fonction
+            if canvas.coords(shot)[1]<50:
+                canvas.delete(shot)
+                Var1=1
+                Var2=0
+                #On repete cette fonction
 
 def destroy_bloc(shot):
+    global Var1,Var2
     nb = -1
-    while(nb<len(BRICK)-1):
-        print(canvas.coords(shot)[1])
-        #if (canvas.coords(shot)[0]>canvas.coords(BRICK[nb])[0] and canvas.coords(BRICK[nb])[0]> canvas.coords(shot)[2] and canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3]):
-        if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[1]):
-            canvas.delete(shot)
-            canvas.delete(BRICK[nb])
-            del BRICK[nb]
-            nb +=1
-        else:
-            nb+=1
+    if canvas.coords(shot)!=[]:
+        if(len(BRICK)!=0):
+            while(nb<len(BRICK)-1):
+                #print(canvas.coords(shot)[1])
+                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3]):
+                    if (canvas.coords(shot)[2]>=canvas.coords(BRICK[nb])[0] and canvas.coords(BRICK[nb])[2]>= canvas.coords(shot)[2]):
+                    #if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3]):
+                        canvas.delete(shot)
+                        canvas.delete(BRICK[nb])
+                        del BRICK[nb]
+                        nb +=1
+                        Var1= 0
+                        Var2=0
+                    elif(canvas.coords(BRICK[nb])[0]<=canvas.coords(shot)[0] and canvas.coords(shot)[0] <= canvas.coords(BRICK[nb])[2]):
+                        #if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3]):
+                        canvas.delete(shot)
+                        canvas.delete(BRICK[nb])
+                        del BRICK[nb]
+                        nb +=1
+                        Var1= 0
+                        Var2=0
+                    else:
+                        nb+=1
+                        Var1 =0
+                        Var2=0
 
-    #fenetre.after(1,destroy_bloc(shot))
+        #fenetre.after(1,destroy_bloc(shot))
+
+def destroy_bloc2(shot):
+    global Var1,Var2
+    midShot = (canvas.coords(shot)[0] + canvas.coords(shot)[2])/2
+    nb = -1
+    if canvas.coords(shot)!=[]:
+        if(len(BRICK)!=0):
+            while(nb<len(BRICK)-1):
+                #print(canvas.coords(shot)[1])
+                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3] and canvas.coords(BRICK[nb])[0]-10<=midShot and midShot<=canvas.coords(BRICK[nb])[2]+10):
+                    print("mid",midShot)
+                    print("x1S",canvas.coords(shot)[0])
+                    print("x2S",canvas.coords(shot)[2])
+                    print("x1B",canvas.coords(BRICK[nb])[0])
+                    print("x2B",canvas.coords(BRICK[nb])[2])
+                    #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
+                    canvas.delete(shot)
+                    canvas.delete(BRICK[nb])
+                    del BRICK[nb]
+                    nb +=1
+                    Var1= 0
+                    Var2=0
+                else:
+                    nb+=1
+                    Var1 =0
+                    Var2=0
+
+
+
 
 def descente():
     global x,y,fin
