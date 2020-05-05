@@ -14,16 +14,37 @@ x=5
 Var1=0
 Var2=0
 var3=0
-fin=0
+fin=3
 score=0
 vitessechute=1000
 vitesseapparition=2000
 #---------------------------#
          #fonctions#
 #---------------------------#
+def vitesse_chute():
+    global vitessechute
+    if vitessechute>850:
+        vitessechute=vitessechute-70
+    if vitessechute>750 and vitessechute<851:
+        vitessechute=vitessechute-50
+    if vitessechute>500 and vitessechute<751:
+        vitessechute=vitessechute-20
+    if vitessechute>80 and vitessechute<501:
+        vitessechute=vitessechute-1
+
+def vitesse_apparition():
+    global  vitesseapparition
+    if vitesseapparition>1500:
+        vitesseapparition=vitesseapparition-50
+    if vitesseapparition>1000 and vitesseapparition<1501:
+        vitesseapparition=vitesseapparition-10
+    if vitesseapparition>800 and vitesseapparition<1001:
+        vitesseapparition=vitesseapparition-5
+    if vitesseapparition>750 and vitesseapparition<801:
+        vitesseapparition=vitesseapparition-1
 
 def create_brick():
-    global brick,x1,x2,var3, vitesseapparition
+    global brick,x1,x2,var3
     proba = randint(0,100)
     #print(proba)
     x1 = randint(80,700)
@@ -42,16 +63,10 @@ def create_brick():
         brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
     
     #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
-    if vitesseapparition>1500:
-        vitesseapparition=vitesseapparition-50
-    if vitesseapparition>1000 and vitesseapparition<1501:
-        vitesseapparition=vitesseapparition-10
-    if vitesseapparition>800 and vitesseapparition<1001:
-        vitesseapparition=vitesseapparition-5
-    if vitesseapparition>750 and vitesseapparition<801:
-        vitesseapparition=vitesseapparition-1
+    
     #print("apparition",vitesseapparition)
     BRICK.append([brick,type])
+    vitesse_apparition()
     fenetre.after(vitesseapparition,create_brick)
         
     
@@ -160,7 +175,7 @@ def destroy_bloc2(shot):
 
 
 def descente():
-    global bx,by,fin, vitessechute
+    global bx,by,fin
     nb = -1
 
     while(nb<len(BRICK)-1):
@@ -170,22 +185,16 @@ def descente():
             canvas.delete(BRICK[nb][0])
             del BRICK[nb]
             nb+=1
-            fin+=1
+            fin-=1
             lose(fin)
         else:
             canvas.move(BRICK[nb][0],bx,by)
             nb +=1
     
     #canvas.move(BRICK[nb],x,y)
-    if vitessechute>850:
-        vitessechute=vitessechute-70
-    if vitessechute>750 and vitessechute<851:
-        vitessechute=vitessechute-50
-    if vitessechute>500 and vitessechute<751:
-        vitessechute=vitessechute-10
-    if vitessechute>30 and vitessechute<501:
-        vitessechute=vitessechute-1
+    
     #print("chute",vitessechute)
+    vitesse_chute()
     fenetre.after(vitessechute,descente)
     #print(BRICK)
 
@@ -194,8 +203,8 @@ def supprimer_bloc(BLOC,num_list_del):
     return BLOC
 
 def lose(fin):
-    print(fin)
-    if fin == 3:
+    print("une vie en moins ! vie restante: ", fin)
+    if fin == 0:
         print("perdu")
         raise SystemExit
 
@@ -301,6 +310,6 @@ bouton_accueil.configure( width=15, height=3,  )
 bouton_quitter.configure( width=15, height=3,  )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
-#fenetre.attributes('-fullscreen', True)
+fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
