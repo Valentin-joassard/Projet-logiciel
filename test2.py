@@ -39,7 +39,7 @@ def create_brick():
         brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
     
     #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
-    BRICK.append(brick)
+    BRICK.append([brick,type])
     fenetre.after(1000,create_brick)
         
     
@@ -113,11 +113,19 @@ def destroy_bloc2(shot):
             while(nb<len(BRICK)-1):
                 #print(canvas.coords(shot)[1])
                 
-                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb])[3] and canvas.coords(BRICK[nb])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb])[2]+20):
+                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb][0])[3] and canvas.coords(BRICK[nb][0])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb][0])[2]+20):
                     
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
                     canvas.delete(shot)
-                    canvas.delete(BRICK[nb])
+                    canvas.delete(BRICK[nb][0])
+                    if(BRICK[nb][1]==0):
+                        print("type 0")
+                    if(BRICK[nb][1]==1):
+                        print("type 1")
+                    if(BRICK[nb][1]==2):
+                        print("type 2")
+                    if(BRICK[nb][1]==3):
+                        print("type 3")
                     del BRICK[nb]
                     nb +=1
                     Var1= 0
@@ -138,7 +146,7 @@ def descente():
 
     while(nb<len(BRICK)-1):
         #print(canvas.coords(BRICK[nb])[1])
-        if (canvas.coords(BRICK[nb])[1]==500):
+        if (canvas.coords(BRICK[nb][0])[1]==500):
             #print(canvas.coords(BRICK[nb])[1])
             canvas.delete(BRICK[nb])
             del BRICK[nb]
@@ -146,7 +154,7 @@ def descente():
             fin+=1
             lose(fin)
         else:
-            canvas.move(BRICK[nb],x,y)
+            canvas.move(BRICK[nb][0],x,y)
             nb +=1
     
     #canvas.move(BRICK[nb],x,y)
