@@ -83,14 +83,14 @@ def restat_up_vit_tir():
     x+=2
 
 def up_vit_defil():
-    global vitesse_chute
-    vitesse_chute+=20
+    global vitessechute
+    vitessechute+=20
     print("Vitesse de défilement augmenté")
     fenetre.after(2000,restat_up_vit_defil)
 
 def restat_up_vit_defil():
-    global vitesse_chute
-    vitesse_chute-=20
+    global vitessechute
+    vitessechute-=20
 
 def nerf_vit_tir():
     global x
@@ -290,10 +290,10 @@ def clavier(event):
     global coords, shot, Var1, Var2, gauche, droite
     move = event.keysym
     if move == "Right" and coords[0]<700 :
-        coords = (coords[0] + 25, coords[1])
+        coords = (coords[0] + droite, coords[1])
         canvas.move(player, droite, 0)
     elif move == "Left" and coords[0]>80:
-        coords = (coords[0] -25, coords[1])
+        coords = (coords[0] + gauche, coords[1])
         canvas.move(player, gauche, 0)
     elif move == "Up":
         Var1=0
