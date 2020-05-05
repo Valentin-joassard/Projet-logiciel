@@ -73,8 +73,10 @@ def up_vit_tir():
     global x
     x = 3
     print("Vitesse de tir augmenté")
-    fenetre.after(2000)
-    x=5
+    fenetre.after(2000,restat_up_vit_tir)
+def restat_up_vit_tir():
+    global x
+    x+=2
 
 def deplacement():
 
