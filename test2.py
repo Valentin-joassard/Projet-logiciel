@@ -6,10 +6,11 @@ from random import randint
       #Variable Globale#
 #---------------------------#
 
-x=0
-y=5
+bx=0
+by=5
 dx = 0
 dy = -5
+x=5
 Var1=0
 Var2=0
 var3=0
@@ -46,8 +47,7 @@ def create_brick():
 
 def deplacement():
 
-    global dx, dy, Var1, Var2
-    x=5
+    global dx, dy, Var1, Var2,x
 
     #if (canvas.coords(shot)[1]!=0):
         #print("oui")
@@ -100,7 +100,7 @@ def destroy_bloc(shot):
         #fenetre.after(1,destroy_bloc(shot))
 
 def destroy_bloc2(shot):
-    global Var1,Var2,score
+    global Var1,Var2,score,x,by
     midShot = (canvas.coords(shot)[0] + canvas.coords(shot)[2])/2
     nb = -1
     #print("mid",midShot)
@@ -149,20 +149,20 @@ def destroy_bloc2(shot):
 
 
 def descente():
-    global x,y,fin
+    global bx,by,fin
     nb = -1
 
     while(nb<len(BRICK)-1):
         #print(canvas.coords(BRICK[nb])[1])
         if (canvas.coords(BRICK[nb][0])[1]==500):
             #print(canvas.coords(BRICK[nb])[1])
-            canvas.delete(BRICK[nb])
+            canvas.delete(BRICK[nb][0])
             del BRICK[nb]
             nb+=1
             fin+=1
             lose(fin)
         else:
-            canvas.move(BRICK[nb][0],x,y)
+            canvas.move(BRICK[nb][0],bx,by)
             nb +=1
     
     #canvas.move(BRICK[nb],x,y)
