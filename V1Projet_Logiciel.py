@@ -25,6 +25,7 @@ droite = 25
       #Création et déplacement des bricks#
 #---------------------------------------------#
 
+#accelere la vitesse de chute des blocs en fonctions du temps
 def vitesse_chute():
     global vitessechute
     if vitessechute>850:
@@ -36,6 +37,7 @@ def vitesse_chute():
     if vitessechute>80 and vitessechute<501:
         vitessechute=vitessechute-1
 
+#accelere la vitesse d'apparition des blocs en fonctions du temps
 def vitesse_apparition():
     global  vitesseapparition
     if vitesseapparition>1500:
@@ -46,7 +48,8 @@ def vitesse_apparition():
         vitesseapparition=vitesseapparition-5
     if vitesseapparition>750 and vitesseapparition<801:
         vitesseapparition=vitesseapparition-1
-    
+
+#definis un type de bloc et l'affiche
 def create_brick():
     global brick,x1,x2,var3
     proba = randint(0,100)
@@ -69,10 +72,9 @@ def create_brick():
     vitesse_apparition()
     fenetre.after(vitesseapparition,create_brick)
 
+#depalcement du tir vers le haut
 def deplacement():
-
     global dx, dy, Var1, Var2,x
-
     if Var1==0:
         canvas.move(shot,dx,dy)
         destroy_bloc2(shot)
@@ -87,6 +89,7 @@ def deplacement():
                 Var1=1
                 Var2=0
 
+#deplacement des blocs vers le bas
 def descente():
     global bx,by,fin
     nb = -1
@@ -108,6 +111,8 @@ def descente():
 #--------------------------------#
     # Destruction des bricks #
 #--------------------------------#
+
+#destruction des blocs si ils touchent un tir
 def destroy_bloc2(shot):
     global Var1,Var2,score,x,by
     midShot = (canvas.coords(shot)[0] + canvas.coords(shot)[2])/2
@@ -142,49 +147,58 @@ def destroy_bloc2(shot):
         # Défaite #
 #---------------------------#
 
-def lose(fin):
-    #print("une vie en moins ! vie restante: ", fin)
+# ferme la page lorsque le joueur à perdu ( en attente d'une page game over)
+ def lose(fin):
+    print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
-        #print("perdu")
+        print("perdu")
         raise SystemExit
 
 #---------------------------#
       # Bonus - Malus #
 #---------------------------#
 
+#augmente la vitesse de tir pendant un certain temps
 def up_vit_tir():
     global x
     x = 3
     fenetre.after(2000,restat_up_vit_tir)
 
+#remet la vitesse de tir à la normale
 def restat_up_vit_tir():
     global x
     x+=2
 
+#augmente la vitesse de defilement pendant un certain temps
 def up_vit_defil():
     global vitessechute
     vitessechute+=20
     fenetre.after(2000,restat_up_vit_defil)
 
+#remet la vitesse de defilement à la normale
 def restat_up_vit_defil():
     global vitessechute
     vitessechute-=20
 
+#diminue la vitesse de tir pendant un certain temps
 def nerf_vit_tir():
     global x
     x=7
     fenetre.after(2000,restat_nerf_vit_tir)
 
+#remet la vitesse de tir à la normale
 def restat_nerf_vit_tir():
     global x
     x-=2
 
+#augmente la vitesse de deplacment pendant un certain temps
 def up_vit_dep():
     global gauche, droite
     gauche -=25
     droite +=25
     fenetre.after(2000,restat_up_vit_dep)
 
+#remet la vitesse de deplacement à la normale
 def restat_up_vit_dep():
     global gauche, droite
     gauche+=25
@@ -194,6 +208,7 @@ def restat_up_vit_dep():
      # Déplacement du joueur #
 #-------------------------------#
 
+#fonction pour aller à gauche, droite ou tirer
 def clavier(event):
     global coords, shot, Var1, Var2, gauche, droite
     move = event.keysym
@@ -214,6 +229,8 @@ def clavier(event):
 #---------------------------#
        #Code principal#
 #---------------------------#
+
+#creation de la fenetre
 
 fenetre = Tk()
 BRICK= []
