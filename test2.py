@@ -54,7 +54,12 @@ def create_brick():
     BRICK.append([brick,type])
     fenetre.after(vitesseapparition,create_brick)
         
-    
+def up_vit_tir():
+    global x
+    x = 3
+    print("Vitesse de tir augmenté")
+    fenetre.after(2000)
+    x=5
 
 def deplacement():
 
@@ -139,6 +144,7 @@ def destroy_bloc2(shot):
                     canvas.delete(BRICK[nb][0])
                     if(BRICK[nb][1]==0):
                         print("type 0")
+                        up_vit_tir()
                     if(BRICK[nb][1]==1):
                         print("type 1")
                     if(BRICK[nb][1]==2):
