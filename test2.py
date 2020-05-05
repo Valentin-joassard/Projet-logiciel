@@ -21,10 +21,24 @@ score=0
 
 def create_brick():
     global brick,x1,x2,var3
-    
+    proba = randint(0,100)
+    #print(proba)
     x1 = randint(80,700)
     x2 = x1 + 30
-    brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+    if (proba >=0 and proba<=70):
+        type = 0
+        brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+    if (proba >70 and proba<=80):
+        type = 1
+        brick = canvas.create_rectangle(x1,100,x2,130,fill="blue")
+    if (proba >80 and proba<=90):
+        type = 2
+        brick = canvas.create_rectangle(x1,100,x2,130,fill="green")
+    if (proba >90 and proba<=100):
+        type = 3
+        brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
+    
+    #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
     BRICK.append(brick)
     fenetre.after(1000,create_brick)
         
