@@ -75,7 +75,7 @@ def create_brick():
 def up_vit_tir():
     global x
     x = 3
-    print("Vitesse de tir augmenté")
+    #print("Vitesse de tir augmenté")
     fenetre.after(2000,restat_up_vit_tir)
 
 def restat_up_vit_tir():
@@ -85,7 +85,7 @@ def restat_up_vit_tir():
 def up_vit_defil():
     global vitessechute
     vitessechute+=20
-    print("Vitesse de défilement augmenté")
+    #print("Vitesse de défilement augmenté")
     fenetre.after(2000,restat_up_vit_defil)
 
 def restat_up_vit_defil():
@@ -95,7 +95,7 @@ def restat_up_vit_defil():
 def nerf_vit_tir():
     global x
     x=7
-    print("Vitesse de tir diminué")
+    #print("Vitesse de tir diminué")
     fenetre.after(2000,restat_nerf_vit_tir)
 
 def restat_nerf_vit_tir():
@@ -106,7 +106,7 @@ def up_vit_dep():
     global gauche, droite
     gauche +=25
     droite +=25
-    print("Vitesse de déplacement augmenté")
+    #print("Vitesse de déplacement augmenté")
     fenetre.after(2000,restat_up_vit_dep)
 
 def restat_up_vit_dep():
@@ -197,23 +197,21 @@ def destroy_bloc2(shot):
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
                     canvas.delete(shot)
                     canvas.delete(BRICK[nb][0])
-                    if(BRICK[nb][1]==0):
-                        print("type 0")
                     if(BRICK[nb][1]==1):
-                        print("type 1")
+                        #print("type 1")
                         nerf_vit_tir()
                     if(BRICK[nb][1]==2):
-                        print("type 2")
+                        #print("type 2")
                         up_vit_dep()
                     if(BRICK[nb][1]==3):
-                        print("type 3")
+                        #print("type 3")
                         up_vit_defil()
                     del BRICK[nb]
                     nb +=1
                     Var1= 0
                     Var2=0
                     score=score+1
-                    print("score :", score)
+                    #print("score :", score)
                 else:
                     nb+=1
                     Var1 =0
@@ -251,9 +249,9 @@ def supprimer_bloc(BLOC,num_list_del):
     return BLOC
 
 def lose(fin):
-    print("une vie en moins ! vie restante: ", fin)
+    #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
-        print("perdu")
+        #print("perdu")
         raise SystemExit
 
 
