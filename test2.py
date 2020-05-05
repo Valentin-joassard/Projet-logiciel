@@ -18,6 +18,9 @@ fin=3
 score=0
 vitessechute=1000
 vitesseapparition=2000
+gauche = -25
+droite = 25
+
 #---------------------------#
          #fonctions#
 #---------------------------#
@@ -74,9 +77,44 @@ def up_vit_tir():
     x = 3
     print("Vitesse de tir augmenté")
     fenetre.after(2000,restat_up_vit_tir)
+
 def restat_up_vit_tir():
     global x
     x+=2
+
+def up_vit_defil():
+    global vitesse_chute
+    vitesse_chute+=20
+    print("Vitesse de défilement augmenté")
+    fenetre.after(2000,restat_up_vit_defil)
+
+def restat_up_vit_defil():
+    global vitesse_chute
+    vitesse_chute-=20
+
+def nerf_vit_tir():
+    global x
+    x=7
+    print("Vitesse de tir diminué")
+    fenetre.after(2000,restat_nerf_vit_tir)
+
+def restat_nerf_vit_tir():
+    global x
+    x-=2
+
+def up_vit_dep():
+    global gauche, droite
+    gauche +=25
+    droite +=25
+    print("Vitesse de déplacement augmenté")
+    fenetre.after(2000,restat_up_vit_dep)
+
+def restat_up_vit_dep():
+    global gauche, droite
+    gauche-=25
+    droite-=25
+
+
 
 def deplacement():
 
@@ -161,13 +199,15 @@ def destroy_bloc2(shot):
                     canvas.delete(BRICK[nb][0])
                     if(BRICK[nb][1]==0):
                         print("type 0")
-                        up_vit_tir()
                     if(BRICK[nb][1]==1):
                         print("type 1")
+                        nerf_vit_tir()
                     if(BRICK[nb][1]==2):
                         print("type 2")
+                        up_vit_dep()
                     if(BRICK[nb][1]==3):
                         print("type 3")
+                        up_vit_defil()
                     del BRICK[nb]
                     nb +=1
                     Var1= 0
@@ -247,9 +287,7 @@ def creer_bloc():
     return type and valeur
 
 def clavier(event):
-    global coords, shot, Var1, Var2
-    gauche = -25
-    droite = 25
+    global coords, shot, Var1, Var2, gauche, droite
     move = event.keysym
     if move == "Right" and coords[0]<700 :
         coords = (coords[0] + 25, coords[1])
