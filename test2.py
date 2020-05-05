@@ -16,12 +16,14 @@ Var2=0
 var3=0
 fin=0
 score=0
+vitessechute=1000
+vitesseapparition=2000
 #---------------------------#
          #fonctions#
 #---------------------------#
 
 def create_brick():
-    global brick,x1,x2,var3
+    global brick,x1,x2,var3, vitesseapparition
     proba = randint(0,100)
     #print(proba)
     x1 = randint(80,700)
@@ -40,8 +42,17 @@ def create_brick():
         brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
     
     #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+    if vitesseapparition>1500:
+        vitesseapparition=vitesseapparition-50
+    if vitesseapparition>1000 and vitesseapparition<1501:
+        vitesseapparition=vitesseapparition-10
+    if vitesseapparition>800 and vitesseapparition<1001:
+        vitesseapparition=vitesseapparition-5
+    if vitesseapparition>750 and vitesseapparition<801:
+        vitesseapparition=vitesseapparition-1
+    #print("apparition",vitesseapparition)
     BRICK.append([brick,type])
-    fenetre.after(1000,create_brick)
+    fenetre.after(vitesseapparition,create_brick)
         
     
 
@@ -119,8 +130,8 @@ def destroy_bloc2(shot):
             if canvas.coords(shot)!=[] :
                 bug=0
                 #print(canvas.coords(shot)[1])
-                print("shot",canvas.coords(shot))
-                print("Brick",canvas.coords(BRICK))
+                #print("shot",canvas.coords(shot))
+                #print("Brick",canvas.coords(BRICK))
                 if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb][0])[3] and canvas.coords(BRICK[nb][0])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb][0])[2]+20):
                             
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
@@ -149,7 +160,7 @@ def destroy_bloc2(shot):
 
 
 def descente():
-    global bx,by,fin
+    global bx,by,fin, vitessechute
     nb = -1
 
     while(nb<len(BRICK)-1):
@@ -166,7 +177,16 @@ def descente():
             nb +=1
     
     #canvas.move(BRICK[nb],x,y)
-    fenetre.after(100,descente)
+    if vitessechute>850:
+        vitessechute=vitessechute-70
+    if vitessechute>750 and vitessechute<851:
+        vitessechute=vitessechute-50
+    if vitessechute>500 and vitessechute<751:
+        vitessechute=vitessechute-10
+    if vitessechute>30 and vitessechute<501:
+        vitessechute=vitessechute-1
+    #print("chute",vitessechute)
+    fenetre.after(vitessechute,descente)
     #print(BRICK)
 
 def supprimer_bloc(BLOC,num_list_del):
