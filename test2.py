@@ -104,14 +104,14 @@ def restat_nerf_vit_tir():
 
 def up_vit_dep():
     global gauche, droite
-    gauche +=25
+    gauche -=25
     droite +=25
     #print("Vitesse de déplacement augmenté")
     fenetre.after(2000,restat_up_vit_dep)
 
 def restat_up_vit_dep():
     global gauche, droite
-    gauche-=25
+    gauche+=25
     droite-=25
 
 
@@ -288,11 +288,15 @@ def clavier(event):
     global coords, shot, Var1, Var2, gauche, droite
     move = event.keysym
     if move == "Right" and coords[0]<700 :
+        #print(droite)
         coords = (coords[0] + droite, coords[1])
         canvas.move(player, droite, 0)
+        #print(coords)
     elif move == "Left" and coords[0]>80:
+        #print(gauche)
         coords = (coords[0] + gauche, coords[1])
         canvas.move(player, gauche, 0)
+        #print(coords)
     elif move == "Up":
         Var1=0
         #t=PhotoImage(file="image/carre.png")
