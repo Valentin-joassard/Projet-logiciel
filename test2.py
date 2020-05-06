@@ -32,8 +32,9 @@ def vitesse_chute():
         vitessechute=vitessechute-50
     if vitessechute>500 and vitessechute<751:
         vitessechute=vitessechute-20
-    if vitessechute>80 and vitessechute<501:
+    if vitessechute>190 and vitessechute<501:
         vitessechute=vitessechute-1
+        #print("chute",vitessechute)
 
 def vitesse_apparition():
     global  vitesseapparition
@@ -43,9 +44,9 @@ def vitesse_apparition():
         vitesseapparition=vitesseapparition-10
     if vitesseapparition>800 and vitesseapparition<1001:
         vitesseapparition=vitesseapparition-5
-    if vitesseapparition>750 and vitesseapparition<801:
+    if vitesseapparition>700 and vitesseapparition<801:
         vitesseapparition=vitesseapparition-1
-
+        #print(vitesseapparition)
 def create_brick():
     global brick,x1,x2,var3
     proba = randint(0,100)
@@ -74,46 +75,49 @@ def create_brick():
         
 def up_vit_tir():
     global x
-    x = 3
-    #print("Vitesse de tir augmenté")
-    fenetre.after(2000,restat_up_vit_tir)
+    x = 2
+    #print("Vitesse de tir augmente")
+    fenetre.after(10000,restat_up_vit_tir)
 
 def restat_up_vit_tir():
     global x
-    x+=2
+    x=5
+    #print("Vitesse de tir reinitialise")
 
 def up_vit_defil():
     global vitessechute
-    vitessechute+=20
-    #print("Vitesse de défilement augmenté")
-    fenetre.after(2000,restat_up_vit_defil)
+    vitessechute-=50
+    #print("Vitesse de defilement augmente")
+    fenetre.after(10000,restat_up_vit_defil)
 
 def restat_up_vit_defil():
     global vitessechute
-    vitessechute-=20
+    vitessechute+=50
+    #print("Vitesse de defilement reinitialise")
 
 def nerf_vit_tir():
     global x
-    x=7
-    #print("Vitesse de tir diminué")
-    fenetre.after(2000,restat_nerf_vit_tir)
+    x=10
+    #print("Vitesse de tir diminue")
+    fenetre.after(10000,restat_nerf_vit_tir)
 
 def restat_nerf_vit_tir():
     global x
-    x-=2
+    x=5
+    #print("Vitesse de tir reinitialise")
 
 def up_vit_dep():
     global gauche, droite
     gauche -=25
     droite +=25
-    #print("Vitesse de déplacement augmenté")
-    fenetre.after(2000,restat_up_vit_dep)
+    #print("Vitesse de deplacement augmente")
+    fenetre.after(10000,restat_up_vit_dep)
 
 def restat_up_vit_dep():
     global gauche, droite
     gauche+=25
     droite-=25
-
+    #print("Vitesse de deplacement reinitialise")
 
 
 def deplacement():
@@ -249,9 +253,9 @@ def supprimer_bloc(BLOC,num_list_del):
     return BLOC
 
 def lose(fin):
-    #print("une vie en moins ! vie restante: ", fin)
+    print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
-        #print("perdu")
+        print("perdu")
         raise SystemExit
 
 
@@ -358,6 +362,6 @@ bouton_accueil.configure( width=15, height=3,  )
 bouton_quitter.configure( width=15, height=3,  )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
-fenetre.attributes('-fullscreen', True)
+#fenetre.attributes('-fullscreen', True)
 fenetre.mainloop()
 
