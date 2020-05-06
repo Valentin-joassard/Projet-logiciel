@@ -1,10 +1,12 @@
 from tkinter import *
 from tkinter import Tk ,Canvas
 from random import randint
+import tkinter.font as tkFont
 
 #---------------------------#
       #Variable Globale#
 #---------------------------#
+  
 
 bx=0
 by=5
@@ -20,11 +22,46 @@ vitessechute=1000
 vitesseapparition=2000
 gauche = -25
 droite = 25
-
+piece=0
+gain=0
 #---------------------------#
          #fonctions#
 #---------------------------#
+def afficherpiece(piece):
+    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    #print(score)
+    Credit.config(text='Piece : ' + str(piece), font=fontStyle)
+    Credit.place(x=1300, y =100)
+
+def gagnerpiece():
+    global piece,gain
+    gain+=1
+    if gain==10:
+        piece+=1
+        gain=0
+    #print(piece)
+    afficherpiece(piece)
+
+
+def affichagescore():
+    
+    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    
+    #print(score)
+    Resultat.config(text='Score : ' + str(score), font=fontStyle)
+    Resultat.place(x=1300, y =200)
+
+def affichervie():
+    global Vie
+    
+    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    #print(score)
+    Vie.config(text='Vie : ' + str(fin), font=fontStyle)
+    Vie.place(x=100, y =200)
+
+
 def vitesse_chute():
+    
     global vitessechute
     if vitessechute>850:
         vitessechute=vitessechute-70
@@ -35,7 +72,7 @@ def vitesse_chute():
     if vitessechute>190 and vitessechute<501:
         vitessechute=vitessechute-1
         #print("chute",vitessechute)
-
+        
 def vitesse_apparition():
     global  vitesseapparition
     if vitesseapparition>1500:
@@ -108,15 +145,15 @@ def restat_nerf_vit_tir():
 
 def up_vit_dep():
     global gauche, droite
-    gauche -=25
-    droite +=25
+    gauche -=15
+    droite +=15
     #print("Vitesse de deplacement augmente")
     fenetre.after(10000,restat_up_vit_dep)
 
 def restat_up_vit_dep():
     global gauche, droite
-    gauche+=25
-    droite-=25
+    gauche+=15
+    droite-=15
     #print("Vitesse de deplacement reinitialise")
 
 
@@ -197,7 +234,7 @@ def destroy_bloc2(shot):
                 #print("shot",canvas.coords(shot))
                 #print("Brick",canvas.coords(BRICK))
                 if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb][0])[3] and canvas.coords(BRICK[nb][0])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb][0])[2]+20):
-                            
+                          
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
                     canvas.delete(shot)
                     canvas.delete(BRICK[nb][0])
@@ -215,6 +252,8 @@ def destroy_bloc2(shot):
                     Var1= 0
                     Var2=0
                     score=score+1
+                    affichagescore()
+                    gagnerpiece()
                     #print("score :", score)
                 else:
                     nb+=1
@@ -236,6 +275,7 @@ def descente():
             del BRICK[nb]
             nb+=1
             fin-=1
+            affichervie()
             lose(fin)
         else:
             canvas.move(BRICK[nb][0],bx,by)
@@ -253,9 +293,9 @@ def supprimer_bloc(BLOC,num_list_del):
     return BLOC
 
 def lose(fin):
-    print("une vie en moins ! vie restante: ", fin)
+    #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
-        print("perdu")
+        #print("perdu")
         raise SystemExit
 
 
@@ -302,7 +342,9 @@ def clavier(event):
         canvas.move(player, gauche, 0)
         #print(coords)
     elif move == "Up":
+
         Var1=0
+        
         #t=PhotoImage(file="image/carre.png")
         
         #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
@@ -330,19 +372,27 @@ def clavier(event):
 #---------------------------#
        #Code principal#
 #---------------------------#
+fenetre = Tk() 
 
-fenetre = Tk()
 TIR =[]
 BRICK= []
 # création du canvas
-canvas = Canvas(fenetre, width=768, height=576, bg="ivory")
+canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 coords = (390,520)
+
+Vie = Label(fenetre, fg ='green')
+Resultat = Label(fenetre, fg ='green')
+Credit=Label(fenetre, fg= "#FFD700")
+affichervie()
+affichagescore()
+afficherpiece(piece)
 # création du rectangle
 bg=PhotoImage(file='image/espace1.png')
 background= canvas.create_image(370,250,image=bg)
 p=PhotoImage(file='image/rocket.png')
 player =  canvas.create_image(390,520,image=p)
+
 #shot = canvas.create_oval(20,20,40,40,fill='red')
 # ajout du bond sur les touches du clavier
 canvas.focus_set()
@@ -362,6 +412,8 @@ bouton_accueil.configure( width=15, height=3,  )
 bouton_quitter.configure( width=15, height=3,  )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
-#fenetre.attributes('-fullscreen', True)
+
+fenetre.attributes('-fullscreen', True)
+
 fenetre.mainloop()
 
