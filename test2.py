@@ -182,6 +182,10 @@ def restat_up_vit_tir():
 
 def up_vit_defil():
     global vitessechute,anticheat1
+    Up_chute1.place(x=200,y=303)
+    if anticheat1==1:
+        Up_chute2.place(x=250,y=303)
+
     if anticheat1<2:
         anticheat1+=1
         vitessechute-=20
@@ -194,27 +198,43 @@ def restat_up_vit_defil():
     global anticheat1,vitessechute
     anticheat1-=1
     vitessechute+=20
-
+    if anticheat1==1:
+        Up_chute2.place_forget()
+    if anticheat1==0:
+        Up_chute1.place_forget()
     #print("Vitesse de defilement reinitialise")
     
 def nerf_vit_tir():
     global x,anticheat2
+    
+    Down.place(x=200,y=463)
+    if anticheat2==1:
+        Down3.place(x=250,y=463)
+
     if anticheat2<2:
         anticheat2+=1
-        x=10
+        x+=5
         #print("Vitesse de tir diminue")
         fenetre.after(10000,restat_nerf_vit_tir)
 
 def restat_nerf_vit_tir():
     global x,anticheat2
     anticheat2-=1
-    x=5
+    x-=5
+    if anticheat2==1:
+        Down3.place_forget()
+    if anticheat2==0:
+         Down.place_forget()
+    
     #print("Vitesse de tir reinitialise")
 
 def up_vit_dep():
     global gauche, droite,anticheat
-    
+    Up_vit1.place(x=200,y=383)
+    if anticheat==1:
+        Up_vit2.place(x=250,y=383)
     if anticheat<2:
+        
         anticheat+=1
         gauche -=15
         droite +=15
@@ -226,6 +246,10 @@ def restat_up_vit_dep():
     anticheat-=1
     gauche+=15
     droite-=15
+    if anticheat==1:
+        Up_vit2.place_forget()
+    if anticheat==0:
+        Up_vit1.place_forget()
     #print("Vitesse de deplacement reinitialise")
 
 
@@ -466,18 +490,9 @@ charger()
 TIR =[]
 BRICK= []
 # création du canvas
-images=PhotoImage(file='image/espace5.png')
-fonds=Label(fenetre,image=images)
-fonds.place(x=-205, y =-300)
-
-#fenetre.configure()
-canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
-# coordonnées initiales
-coords = (390,520)
-MeilleurScore = Label(fenetre, fg ='#FFD700',bg="#404040")
-Vie = Label(fenetre, fg ='#0c136d',bg='#404040')
-Resultat = Label(fenetre, fg ='#0c136d',bg='#404040')
-Credit=Label(fenetre, fg= "#FFD700",bg='#404040')
+#---------------------------#
+         #image#
+#---------------------------#
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
 explosion=PhotoImage(file='image/epee.png')
@@ -485,13 +500,44 @@ p=PhotoImage(file='image/rocket1.png')
 f=PhotoImage(file='image/coeur.png')
 image=PhotoImage(file='image/espace5.png')
 titre=PhotoImage(file='image/titre.png')
+images=PhotoImage(file='image/espace5.png')
+down=PhotoImage(file='image/down.png')
+up=PhotoImage(file='image/up.png')
+
+fonds=Label(fenetre,image=images)
+fonds.place(x=-205, y =-300)
+
+#fenetre.configure()
+canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
+# coordonnées initiales
+coords = (390,520)
+fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
+MeilleurScore = Label(fenetre, fg ='#FFD700',bg="#404040")
+Vie = Label(fenetre, fg ='#0c136d',bg='#404040')
+Resultat = Label(fenetre, fg ='#0c136d',bg='#404040')
+Credit=Label(fenetre, fg= "#FFD700",bg='#404040')
 Titre=Label(fenetre,image=titre,bg="black")
-Titre.place(x=400, y =620)
 Nvie1=Label(fenetre,image=f,bg="#404040")
 Nvie2=Label(fenetre,image=f,bg="#404040")
 Nvie3=Label(fenetre,image=f,bg="#404040")
+Up_chute1=Label(fenetre,image=up,bg="black")
+Up_chute2=Label(fenetre,image=up,bg="black")
+Up_vit1=Label(fenetre,image=up,bg="black")
+Up_vit2=Label(fenetre,image=up,bg="black")
+Down=Label(fenetre,image=down,bg="black")
+Down3=Label(fenetre,image=down,bg="black")
+Down2=Label(fenetre,fg='#0c136d',bg="#404040")
+Down2.config(text="       tir       ", font=fontStyle)
+Down2.place(x=50,y=460)
+Up2=Label(fenetre,fg='#0c136d',bg="#404040")
+Up2.config(text="   vitesse   ", font=fontStyle)
+Up2.place(x=50,y=380)
+Up3=Label(fenetre,fg='#0c136d',bg="#404040")
+Up3.config(text="    chute    ", font=fontStyle)
+Up3.place(x=50,y=300)
 
 
+Titre.place(x=400, y =620)
 affichervie(Nvie1,Nvie2,Nvie3)
 affichagescore()
 afficherpiece(piece)
