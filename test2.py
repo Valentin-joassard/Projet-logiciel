@@ -329,7 +329,11 @@ def destroy_bloc2(shot):
                 #print(canvas.coords(shot)[1])
                 #print("shot",canvas.coords(shot))
                 #print("Brick",canvas.coords(BRICK))
-                if(canvas.coords(shot)[1]==canvas.coords(BRICK[nb][0])[3] and canvas.coords(BRICK[nb][0])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb][0])[2]+20):
+                #print("yup",canvas.coords(shot)[1])
+                #print("yup2",canvas.coords(shot)[1])
+                #print("yup3",canvas.coords(shot)[1])
+                
+                if( canvas.coords(shot)[1]<=canvas.coords(BRICK[nb][0])[3] and canvas.coords(shot)[1]>=canvas.coords(BRICK[nb][0])[1] and canvas.coords(BRICK[nb][0])[0]-20<=midShot and midShot<=canvas.coords(BRICK[nb][0])[2]+20):
                           
                     #if (canvas.coords(BRICK[nb])[0]<=midShot and midShot<=canvas.coords(BRICK[nb])[2]):
                     canvas.delete(shot)
