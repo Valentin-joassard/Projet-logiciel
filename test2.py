@@ -25,7 +25,9 @@ droite = 25
 piece=0
 gain=0
 meilleur_score = 0
-
+anticheat=0
+anticheat1=0
+anticheat2=0
 
 #-------------------------------#
     #Enregistrement/chargement#
@@ -48,11 +50,11 @@ def charger():
          #fonctions#
 #---------------------------#
 def afficherpiece(piece):
-    Coin=Label(fenetre,image=coin,bg="grey")
+    Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
-    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
     #print(score)
-    Credit.config(text='Piece : ' + str(piece), font=fontStyle)
+    Credit.config(text='Pieces : ' + str(piece), font=fontStyle)
     Credit.place(x=1300, y =100)
 
 def gagnerpiece():
@@ -66,20 +68,20 @@ def gagnerpiece():
 
 
 def affichagescore():
-    Explosion=Label(fenetre,image=explosion,bg="grey")
+    Explosion=Label(fenetre,image=explosion,bg="#404040")
     Explosion.place(x=120, y =200)
-    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
     
     #print(score)
-    Resultat.config(text='Score : ' + str(score), font=fontStyle)
-    Resultat.place(x=160, y =200)
+    Resultat.config(text='  Score : ' + str(score), font=fontStyle)
+    Resultat.place(x=150, y =200)
 
 
 def affichage_meilleur_score(): 
     global meilleur_score
-    Coupe=Label(fenetre,image=coupe,bg="grey")
+    Coupe=Label(fenetre,image=coupe,bg="#404040")
     Coupe.place(x=1200, y =195)
-    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
     
     MeilleurScore.config(text='Meilleur score : ' + str(meilleur_score), font=fontStyle)
     MeilleurScore.place(x=1250, y =200)
@@ -93,9 +95,9 @@ def affichervie(Nvie1,Nvie2,Nvie3):
     
     if ok==0:
        
-        Nvie1.place(x=170, y =90)
-        Nvie2.place(x=220, y =90)
-        Nvie3.place(x=270, y =90)
+        Nvie1.place(x=165, y =100)
+        Nvie2.place(x=225, y =100)
+        Nvie3.place(x=285, y =100)
         ok=ok+1
     if fin==2 and ok==1:
         Nvie3.place_forget()
@@ -106,10 +108,10 @@ def affichervie(Nvie1,Nvie2,Nvie3):
     if fin==0 and ok==3:
         Nvie1.place_forget()
         ok=ok+1
-    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
     #print(score)
     #Vie.config(text='Vie : ' + str(fin), font=fontStyle)
-    Vie.config(text='Vie : ', font=fontStyle)
+    Vie.config(text=' Vie : ', font=fontStyle)
     Vie.place(x=100, y =100)
 
 
@@ -117,14 +119,14 @@ def vitesse_chute():
     
     global vitessechute
     if vitessechute>850:
-        #vitessechute=vitessechute-70
-        vitessechute=vitessechute-800
+        vitessechute=vitessechute-70
+        #vitessechute=vitessechute-800
     if vitessechute>750 and vitessechute<851:
-        #vitessechute=vitessechute-50
-        vitessechute=vitessechute-100
+        vitessechute=vitessechute-50
+        #vitessechute=vitessechute-100
     if vitessechute>500 and vitessechute<751:
-        #vitessechute=vitessechute-20
-        vitessechute=vitessechute-100
+        vitessechute=vitessechute-20
+        #vitessechute=vitessechute-100
     if vitessechute>190 and vitessechute<501:
         vitessechute=vitessechute-1
         #print("chute",vitessechute)
@@ -179,36 +181,49 @@ def restat_up_vit_tir():
     #print("Vitesse de tir reinitialise")
 
 def up_vit_defil():
-    global vitessechute
-    vitessechute-=50
-    #print("Vitesse de defilement augmente")
-    fenetre.after(10000,restat_up_vit_defil)
+    global vitessechute,anticheat1
+    if anticheat1<2:
+        anticheat1+=1
+        vitessechute-=20
+            
+        #print("Vitesse de defilement augmente")
+        
+        fenetre.after(10000,restat_up_vit_defil)
 
 def restat_up_vit_defil():
-    global vitessechute
-    vitessechute+=50
-    #print("Vitesse de defilement reinitialise")
+    global anticheat1,vitessechute
+    anticheat1-=1
+    vitessechute+=20
 
+    #print("Vitesse de defilement reinitialise")
+    
 def nerf_vit_tir():
-    global x
-    x=10
-    #print("Vitesse de tir diminue")
-    fenetre.after(10000,restat_nerf_vit_tir)
+    global x,anticheat2
+    if anticheat2<2:
+        anticheat2+=1
+        x=10
+        #print("Vitesse de tir diminue")
+        fenetre.after(10000,restat_nerf_vit_tir)
 
 def restat_nerf_vit_tir():
-    global x
+    global x,anticheat2
+    anticheat2-=1
     x=5
     #print("Vitesse de tir reinitialise")
 
 def up_vit_dep():
-    global gauche, droite
-    gauche -=15
-    droite +=15
-    #print("Vitesse de deplacement augmente")
-    fenetre.after(10000,restat_up_vit_dep)
+    global gauche, droite,anticheat
+    
+    if anticheat<2:
+        anticheat+=1
+        gauche -=15
+        droite +=15
+        #print("Vitesse de deplacement augmente")
+        fenetre.after(10000,restat_up_vit_dep)
 
 def restat_up_vit_dep():
-    global gauche, droite
+    global gauche, droite,anticheat
+    anticheat-=1
     gauche+=15
     droite-=15
     #print("Vitesse de deplacement reinitialise")
@@ -356,11 +371,16 @@ def lose(fin):
     #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
         fontStyle = tkFont.Font(family="Arial Black", size=50)
-        Fin = Label(fenetre, fg ='red',bg='black')
+        Fin = Label(fenetre, fg ='red',bg='#074e6c')
+
+
         Fin.config(text='      GAME OVER      \nTon score: ' + str(score)+" ", font=fontStyle)
         Fin.place(x=410, y =150)
         #print("perdu")
         if meilleur_score < score :
+            Champion = Label(fenetre, fg ='red',bg='#074e6c')
+            Champion.config(text='     NEW RECORD     ', font=fontStyle)
+            Champion.place(x=405, y =400)
             meilleur_score = score
         enregistrer()
         
@@ -454,19 +474,22 @@ fonds.place(x=-205, y =-300)
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 coords = (390,520)
-MeilleurScore = Label(fenetre, fg ='#FFD700',bg='grey')
-Vie = Label(fenetre, fg ='red',bg='grey')
-Resultat = Label(fenetre, fg ='red',bg='grey')
-Credit=Label(fenetre, fg= "#FFD700",bg='grey')
+MeilleurScore = Label(fenetre, fg ='#FFD700',bg="#404040")
+Vie = Label(fenetre, fg ='#0c136d',bg='#404040')
+Resultat = Label(fenetre, fg ='#0c136d',bg='#404040')
+Credit=Label(fenetre, fg= "#FFD700",bg='#404040')
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
-explosion=PhotoImage(file='image/explosion.png')
-p=PhotoImage(file='image/rocket.png')
+explosion=PhotoImage(file='image/epee.png')
+p=PhotoImage(file='image/rocket1.png')
+f=PhotoImage(file='image/coeur.png')
 image=PhotoImage(file='image/espace5.png')
-
-Nvie1=Label(fenetre,image=p,bg="grey")
-Nvie2=Label(fenetre,image=p,bg="grey")
-Nvie3=Label(fenetre,image=p,bg="grey")
+titre=PhotoImage(file='image/titre.png')
+Titre=Label(fenetre,image=titre,bg="black")
+Titre.place(x=400, y =620)
+Nvie1=Label(fenetre,image=f,bg="#404040")
+Nvie2=Label(fenetre,image=f,bg="#404040")
+Nvie3=Label(fenetre,image=f,bg="#404040")
 
 
 affichervie(Nvie1,Nvie2,Nvie3)
@@ -487,8 +510,7 @@ canvas.pack()
 create_brick()
 descente()
 #destroy_bloc()
-champ_label = Label(fenetre, text="Brick shooter")
-champ_label.pack()
+
 bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
 bouton_quitter.pack(side="bottom")
 bouton_accueil=Button(fenetre,text="Accueil")
