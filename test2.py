@@ -48,6 +48,8 @@ def charger():
          #fonctions#
 #---------------------------#
 def afficherpiece(piece):
+    Coin=Label(fenetre,image=coin,bg="grey")
+    Coin.place(x=1250, y =100)
     fontStyle = tkFont.Font(family="Lucida Grande", size=20)
     #print(score)
     Credit.config(text='Piece : ' + str(piece), font=fontStyle)
@@ -64,30 +66,51 @@ def gagnerpiece():
 
 
 def affichagescore():
-    
+    Explosion=Label(fenetre,image=explosion,bg="grey")
+    Explosion.place(x=120, y =200)
     fontStyle = tkFont.Font(family="Lucida Grande", size=20)
     
     #print(score)
     Resultat.config(text='Score : ' + str(score), font=fontStyle)
-    Resultat.place(x=1300, y =300)
+    Resultat.place(x=160, y =200)
 
 
 def affichage_meilleur_score(): 
     global meilleur_score
+    Coupe=Label(fenetre,image=coupe,bg="grey")
+    Coupe.place(x=1200, y =195)
     fontStyle = tkFont.Font(family="Lucida Grande", size=20)
     
     MeilleurScore.config(text='Meilleur score : ' + str(meilleur_score), font=fontStyle)
     MeilleurScore.place(x=1250, y =200)
 
 
+ok=0
 
-def affichervie():
-    global Vie
+def affichervie(Nvie1,Nvie2,Nvie3):
+    global fin,ok
     
+    
+    if ok==0:
+       
+        Nvie1.place(x=170, y =90)
+        Nvie2.place(x=220, y =90)
+        Nvie3.place(x=270, y =90)
+        ok=ok+1
+    if fin==2 and ok==1:
+        Nvie3.place_forget()
+        ok=ok+1
+    if fin==1 and ok==2:
+        Nvie2.place_forget()
+        ok=ok+1
+    if fin==0 and ok==3:
+        Nvie1.place_forget()
+        ok=ok+1
     fontStyle = tkFont.Font(family="Lucida Grande", size=20)
     #print(score)
-    Vie.config(text='Vie : ' + str(fin), font=fontStyle)
-    Vie.place(x=100, y =200)
+    #Vie.config(text='Vie : ' + str(fin), font=fontStyle)
+    Vie.config(text='Vie : ', font=fontStyle)
+    Vie.place(x=100, y =100)
 
 
 def vitesse_chute():
@@ -95,10 +118,13 @@ def vitesse_chute():
     global vitessechute
     if vitessechute>850:
         vitessechute=vitessechute-70
+        #vitessechute=vitessechute-800
     if vitessechute>750 and vitessechute<851:
         vitessechute=vitessechute-50
+        #vitessechute=vitessechute-100
     if vitessechute>500 and vitessechute<751:
         vitessechute=vitessechute-20
+        #vitessechute=vitessechute-100
     if vitessechute>190 and vitessechute<501:
         vitessechute=vitessechute-1
         #print("chute",vitessechute)
@@ -305,7 +331,7 @@ def descente():
             del BRICK[nb]
             nb+=1
             fin-=1
-            affichervie()
+            affichervie(Nvie1,Nvie2,Nvie3)
             lose(fin)
         else:
             canvas.move(BRICK[nb][0],bx,by)
@@ -411,21 +437,32 @@ charger()
 TIR =[]
 BRICK= []
 # création du canvas
+fenetre.configure(bg='grey')
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 coords = (390,520)
-MeilleurScore = Label(fenetre, fg ='green')
-Vie = Label(fenetre, fg ='green')
-Resultat = Label(fenetre, fg ='green')
-Credit=Label(fenetre, fg= "#FFD700")
-affichervie()
+MeilleurScore = Label(fenetre, fg ='green',bg='grey')
+Vie = Label(fenetre, fg ='green',bg='grey')
+Resultat = Label(fenetre, fg ='green',bg='grey')
+Credit=Label(fenetre, fg= "#FFD700",bg='grey')
+coin=PhotoImage(file='image/coin.png')
+coupe=PhotoImage(file='image/coupe.png')
+explosion=PhotoImage(file='image/explosion.png')
+p=PhotoImage(file='image/rocket.png')
+
+
+Nvie1=Label(fenetre,image=p,bg="grey")
+Nvie2=Label(fenetre,image=p,bg="grey")
+Nvie3=Label(fenetre,image=p,bg="grey")
+
+
+affichervie(Nvie1,Nvie2,Nvie3)
 affichagescore()
 afficherpiece(piece)
 affichage_meilleur_score()
 # création du rectangle
 bg=PhotoImage(file='image/espace1.png')
 background= canvas.create_image(370,250,image=bg)
-p=PhotoImage(file='image/rocket.png')
 player =  canvas.create_image(390,520,image=p)
 
 #shot = canvas.create_oval(20,20,40,40,fill='red')
