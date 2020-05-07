@@ -437,19 +437,23 @@ charger()
 TIR =[]
 BRICK= []
 # création du canvas
-fenetre.configure(bg='grey')
+images=PhotoImage(file='image/espace5.png')
+fonds=Label(fenetre,image=images)
+fonds.place(x=-205, y =-300)
+
+#fenetre.configure()
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 coords = (390,520)
-MeilleurScore = Label(fenetre, fg ='green',bg='grey')
-Vie = Label(fenetre, fg ='green',bg='grey')
-Resultat = Label(fenetre, fg ='green',bg='grey')
+MeilleurScore = Label(fenetre, fg ='#FFD700',bg='grey')
+Vie = Label(fenetre, fg ='red',bg='grey')
+Resultat = Label(fenetre, fg ='red',bg='grey')
 Credit=Label(fenetre, fg= "#FFD700",bg='grey')
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
 explosion=PhotoImage(file='image/explosion.png')
 p=PhotoImage(file='image/rocket.png')
-
+image=PhotoImage(file='image/espace5.png')
 
 Nvie1=Label(fenetre,image=p,bg="grey")
 Nvie2=Label(fenetre,image=p,bg="grey")
@@ -461,7 +465,7 @@ affichagescore()
 afficherpiece(piece)
 affichage_meilleur_score()
 # création du rectangle
-bg=PhotoImage(file='image/espace1.png')
+bg=PhotoImage(file='image/espace3.png')
 background= canvas.create_image(370,250,image=bg)
 player =  canvas.create_image(390,520,image=p)
 
