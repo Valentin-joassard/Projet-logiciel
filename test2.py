@@ -117,14 +117,14 @@ def vitesse_chute():
     
     global vitessechute
     if vitessechute>850:
-        vitessechute=vitessechute-70
-        #vitessechute=vitessechute-800
+        #vitessechute=vitessechute-70
+        vitessechute=vitessechute-800
     if vitessechute>750 and vitessechute<851:
-        vitessechute=vitessechute-50
-        #vitessechute=vitessechute-100
+        #vitessechute=vitessechute-50
+        vitessechute=vitessechute-100
     if vitessechute>500 and vitessechute<751:
-        vitessechute=vitessechute-20
-        #vitessechute=vitessechute-100
+        #vitessechute=vitessechute-20
+        vitessechute=vitessechute-100
     if vitessechute>190 and vitessechute<501:
         vitessechute=vitessechute-1
         #print("chute",vitessechute)
@@ -141,30 +141,31 @@ def vitesse_apparition():
         vitesseapparition=vitesseapparition-1
         #print(vitesseapparition)
 def create_brick():
-    global brick,x1,x2,var3
-    proba = randint(0,100)
-    #print(proba)
-    x1 = randint(80,700)
-    x2 = x1 + 30
-    if (proba >=0 and proba<=70):
-        type = 0
-        brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
-    if (proba >70 and proba<=80):
-        type = 1
-        brick = canvas.create_rectangle(x1,100,x2,130,fill="blue")
-    if (proba >80 and proba<=90):
-        type = 2
-        brick = canvas.create_rectangle(x1,100,x2,130,fill="green")
-    if (proba >90 and proba<=100):
-        type = 3
-        brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
-    
-    #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
-    
-    #print("apparition",vitesseapparition)
-    BRICK.append([brick,type])
-    vitesse_apparition()
-    fenetre.after(vitesseapparition,create_brick)
+    if fin!=0:
+        global brick,x1,x2,var3
+        proba = randint(0,100)
+        #print(proba)
+        x1 = randint(80,700)
+        x2 = x1 + 30
+        if (proba >=0 and proba<=70):
+            type = 0
+            brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+        if (proba >70 and proba<=80):
+            type = 1
+            brick = canvas.create_rectangle(x1,100,x2,130,fill="blue")
+        if (proba >80 and proba<=90):
+            type = 2
+            brick = canvas.create_rectangle(x1,100,x2,130,fill="green")
+        if (proba >90 and proba<=100):
+            type = 3
+            brick = canvas.create_rectangle(x1,100,x2,130,fill="yellow")
+        
+        #brick = canvas.create_rectangle(x1,100,x2,130,fill="red")
+        
+        #print("apparition",vitesseapparition)
+        BRICK.append([brick,type])
+        vitesse_apparition()
+        fenetre.after(vitesseapparition,create_brick)
         
 def up_vit_tir():
     global x
@@ -321,28 +322,30 @@ def destroy_bloc2(shot):
 
 def descente():
     global bx,by,fin
-    nb = -1
+    if fin!=0:
+        nb = -1
 
-    while(nb<len(BRICK)-1):
-        #print(canvas.coords(BRICK[nb])[1])
-        if (canvas.coords(BRICK[nb][0])[1]==500):
+        while(nb<len(BRICK)-1):
             #print(canvas.coords(BRICK[nb])[1])
-            canvas.delete(BRICK[nb][0])
-            del BRICK[nb]
-            nb+=1
-            fin-=1
-            affichervie(Nvie1,Nvie2,Nvie3)
-            lose(fin)
-        else:
-            canvas.move(BRICK[nb][0],bx,by)
-            nb +=1
-    
-    #canvas.move(BRICK[nb],x,y)
-    
-    #print("chute",vitessechute)
-    vitesse_chute()
-    fenetre.after(vitessechute,descente)
-    #print(BRICK)
+            if (canvas.coords(BRICK[nb][0])[1]==500):
+                #print(canvas.coords(BRICK[nb])[1])
+                canvas.delete(BRICK[nb][0])
+                del BRICK[nb]
+                nb+=1
+                if fin>0:
+                    fin-=1
+                affichervie(Nvie1,Nvie2,Nvie3)
+                lose(fin)
+            else:
+                canvas.move(BRICK[nb][0],bx,by)
+                nb +=1
+        
+        #canvas.move(BRICK[nb],x,y)
+        
+        #print("chute",vitessechute)
+        vitesse_chute()
+        fenetre.after(vitessechute,descente)
+        #print(BRICK)
 
 def supprimer_bloc(BLOC,num_list_del):
     del BLOC[num_list_del]
@@ -352,11 +355,16 @@ def lose(fin):
     global meilleur_score, score
     #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
+        fontStyle = tkFont.Font(family="Arial Black", size=50)
+        Fin = Label(fenetre, fg ='red',bg='black')
+        Fin.config(text='      GAME OVER      \nTon score: ' + str(score)+" ", font=fontStyle)
+        Fin.place(x=410, y =150)
         #print("perdu")
         if meilleur_score < score :
             meilleur_score = score
         enregistrer()
-        raise SystemExit
+        
+        #raise SystemExit
 
 
 
@@ -389,44 +397,45 @@ def creer_bloc():
     return type and valeur
 
 def clavier(event):
-    global coords, shot, Var1, Var2, gauche, droite
-    move = event.keysym
-    if move == "Right" and coords[0]<700 :
-        #print(droite)
-        coords = (coords[0] + droite, coords[1])
-        canvas.move(player, droite, 0)
-        #print(coords)
-    elif move == "Left" and coords[0]>80:
-        #print(gauche)
-        coords = (coords[0] + gauche, coords[1])
-        canvas.move(player, gauche, 0)
-        #print(coords)
-    elif move == "Up":
+    global coords, shot, Var1, Var2, gauche, droite,fin
+    if fin!=0:
+        move = event.keysym
+        if move == "Right" and coords[0]<700 :
+            #print(droite)
+            coords = (coords[0] + droite, coords[1])
+            canvas.move(player, droite, 0)
+            #print(coords)
+        elif move == "Left" and coords[0]>80:
+            #print(gauche)
+            coords = (coords[0] + gauche, coords[1])
+            canvas.move(player, gauche, 0)
+            #print(coords)
+        elif move == "Up":
 
-        Var1=0
-        
-        #t=PhotoImage(file="image/carre.png")
-        
-        #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
-        if Var2==0:
-            shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
-            Var2=1
-            deplacement()
-            xTir = coords[0]
-            yTir = coords[1]
-            TIR.append([xTir,yTir])
-        #TIR.append(yTir)
-        #print(TIR)
-    #elif move =="Down":
-     #   canvas.coords(shot,coords[0],coords[1]-25)
-    #while(yTir!=0):
-    #    canvas.coords(shot,coords[0],coords[1]-25)
-    #    yTir = coords[1]-25            
-         
-    #print(coords)
-        canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
-        
-        fenetre.update()
+            Var1=0
+            
+            #t=PhotoImage(file="image/carre.png")
+            
+            #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
+            if Var2==0:
+                shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
+                Var2=1
+                deplacement()
+                xTir = coords[0]
+                yTir = coords[1]
+                TIR.append([xTir,yTir])
+            #TIR.append(yTir)
+            #print(TIR)
+        #elif move =="Down":
+        #   canvas.coords(shot,coords[0],coords[1]-25)
+        #while(yTir!=0):
+        #    canvas.coords(shot,coords[0],coords[1]-25)
+        #    yTir = coords[1]-25            
+            
+        #print(coords)
+            canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
+            
+            fenetre.update()
 
 
 #---------------------------#
