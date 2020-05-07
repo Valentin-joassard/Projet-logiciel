@@ -24,8 +24,26 @@ gauche = -25
 droite = 25
 piece=0
 gain=0
+meilleur_score = 0
 
 
+#-------------------------------#
+    #Enregistrement/chargement#
+#-------------------------------#
+def enregistrer():
+    global meilleur_score, piece
+    var = str(meilleur_score)
+    var1 = str(piece)
+    mon_fichier = open("fichier.txt", "w")
+    mon_fichier.write(var)
+    mon_fichier.write("\n")
+    mon_fichier.write(var1)
+    mon_fichier.close()
+
+def charger():
+    global meilleur_score, piece
+    with open("fichier.txt", "r") as fichier:
+        meilleur_score, piece = [int(elt) for elt in fichier.readlines()]
 #---------------------------#
          #fonctions#
 #---------------------------#
@@ -51,7 +69,17 @@ def affichagescore():
     
     #print(score)
     Resultat.config(text='Score : ' + str(score), font=fontStyle)
-    Resultat.place(x=1300, y =200)
+    Resultat.place(x=1300, y =300)
+
+
+def affichage_meilleur_score(): 
+    global meilleur_score
+    fontStyle = tkFont.Font(family="Lucida Grande", size=20)
+    
+    MeilleurScore.config(text='Meilleur score : ' + str(meilleur_score), font=fontStyle)
+    MeilleurScore.place(x=1250, y =200)
+
+
 
 def affichervie():
     global Vie
@@ -295,9 +323,13 @@ def supprimer_bloc(BLOC,num_list_del):
     return BLOC
 
 def lose(fin):
+    global meilleur_score, score
     #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
         #print("perdu")
+        if meilleur_score < score :
+            meilleur_score = score
+        enregistrer()
         raise SystemExit
 
 
@@ -375,20 +407,21 @@ def clavier(event):
        #Code principal#
 #---------------------------#
 fenetre = Tk() 
-
+charger()
 TIR =[]
 BRICK= []
 # création du canvas
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 # coordonnées initiales
 coords = (390,520)
-
+MeilleurScore = Label(fenetre, fg ='green')
 Vie = Label(fenetre, fg ='green')
 Resultat = Label(fenetre, fg ='green')
 Credit=Label(fenetre, fg= "#FFD700")
 affichervie()
 affichagescore()
 afficherpiece(piece)
+affichage_meilleur_score()
 # création du rectangle
 bg=PhotoImage(file='image/espace1.png')
 background= canvas.create_image(370,250,image=bg)
@@ -418,4 +451,6 @@ cadre.pack(side="bottom", fill=BOTH)
 fenetre.attributes('-fullscreen', True)
 
 fenetre.mainloop()
+
+enregistrer()
 

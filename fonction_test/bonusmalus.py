@@ -1,20 +1,17 @@
-import os
-import pickle
-os.chdir("c:/Users/Maxence CROSSE/Desktop/ProjetLogiciel/Projet-logiciel/Projet-logiciel/fonction_test")
-score = {
-  "joueur 1":    5,
-  "joueur 2":   35,
-  "joueur 3":   20,
-  "joueur 4":    2,
-    }
-with open('fichier.txt', 'wb') as fichier:
-    mon_pickler = pickle.Pickler(fichier)
-    mon_pickler.dump(score)
+def enregistrer(score,piece):
+    global score, piece
+    var = str(score)
+    var1 = str(piece)
+    mon_fichier = open("fichier.txt", "w")
+    mon_fichier.write(var)
+    mon_fichier.write("\n")
+    mon_fichier.write(var1)
+    mon_fichier.close()
 
-with open('fichier.txt', 'rb') as fichier:
-    mon_depickler = pickle.Unpickler(fichier)
-    score_recupere = mon_depickler.load()
-    print(score_recupere)
+def charger():
+    global score, piece
+    with open("fichier.txt", "r") as fichier:
+        score, piece = [int(elt) for elt in fichier.readlines()]
 
 
 
