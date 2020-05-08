@@ -2,7 +2,7 @@ from tkinter import *
 from tkinter import Tk ,Canvas
 from random import randint
 import tkinter.font as tkFont
-
+from winsound import *
 #---------------------------#
       #Variable Globale#
 #---------------------------#
@@ -377,6 +377,7 @@ def descente():
                 nb+=1
                 if fin>0:
                     fin-=1
+                    musique_vie = PlaySound("son/yes2.wav", SND_ASYNC)
                 affichervie(Nvie1,Nvie2,Nvie3)
                 lose(fin)
             else:
@@ -398,14 +399,14 @@ def lose(fin):
     global meilleur_score, score
     #print("une vie en moins ! vie restante: ", fin)
     if fin == 0:
+        musique_lose = PlaySound("son/yes4.wav", SND_ASYNC)
         fontStyle = tkFont.Font(family="Arial Black", size=50)
         Fin = Label(fenetre, fg ='red',bg='#074e6c')
-
-
         Fin.config(text='      GAME OVER      \nTon score: ' + str(score)+" ", font=fontStyle)
         Fin.place(x=410, y =150)
         #print("perdu")
         if meilleur_score < score :
+            musique_record = PlaySound("son/yes3.wav", SND_ASYNC)
             Champion = Label(fenetre, fg ='red',bg='#074e6c')
             Champion.config(text='     NEW RECORD     ', font=fontStyle)
             Champion.place(x=405, y =400)
@@ -466,6 +467,8 @@ def clavier(event):
             
             #shot = canvas.create_image(coords[0],coords[1]-25,image=t)
             if Var2==0:
+                musique_tir = PlaySound("son/yes.wav", SND_ASYNC)
+                #musique()
                 shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
                 Var2=1
                 deplacement()
@@ -485,7 +488,16 @@ def clavier(event):
             
             fenetre.update()
 
+def Quitter():
+    command=fenetre.quit()
+    
+def son(n):
+    musique_bouton = PlaySound("son/souris_bouton.wav", SND_ASYNC)
+    if n==0:
+        fenetre.after(1000,Quitter())
 
+# def musique():
+    #musique_game = PlaySound("son/yes5.wav",SND_NODEFAULT)
 #---------------------------#
        #Code principal#
 #---------------------------#
@@ -561,17 +573,18 @@ create_brick()
 descente()
 #destroy_bloc()
 
-bouton_quitter=Button(fenetre, text="Quitter", command=fenetre.quit)
+bouton_quitter=Button(fenetre, text="Quitter", command=lambda n=0: son(n))
 bouton_quitter.pack(side="bottom")
-bouton_accueil=Button(fenetre,text="Accueil")
+bouton_accueil=Button(fenetre,text="Accueil",command=lambda n=1: son(n))
 bouton_accueil.pack(side="bottom")
-bouton_accueil.configure( width=15, height=3,  )
-bouton_quitter.configure( width=15, height=3,  )
+bouton_accueil.configure( width=15, height=3 )
+bouton_quitter.configure( width=15, height=3 )
 cadre = Frame(fenetre)
 cadre.pack(side="bottom", fill=BOTH)
 
 fenetre.attributes('-fullscreen', True)
 
+#fenetre.after(1000,musique)
 fenetre.mainloop()
 
 enregistrer()
