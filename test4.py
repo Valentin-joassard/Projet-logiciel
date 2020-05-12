@@ -3,10 +3,13 @@ from tkinter import Tk ,Canvas
 from random import randint
 import tkinter.font as tkFont
 from winsound import *
+import subprocess
 #---------------------------#
       #Variable Globale#
 #---------------------------#
-  
+def menus():
+    fenetre.destroy()
+    subprocess.run('python menuPrincipal.py')  
 
 bx=0
 by=5
@@ -498,7 +501,8 @@ def son(n):
     musique_bouton = PlaySound("son/souris_bouton.wav", SND_ASYNC)
     if n==0:
         fenetre.after(1000,Quitter())
-
+    if n==1:
+        fenetre.after(1000,menus())
 # def musique():
     #musique_game = PlaySound("son/yes5.wav",SND_NODEFAULT)
 #---------------------------#
