@@ -580,6 +580,11 @@ bouton_quitter=Button(fenetre, text="Quitter", command=lambda n=0: son(n))
 bouton_quitter.pack(side="bottom")
 bouton_accueil=Button(fenetre,text="Accueil",command=lambda n=1: son(n))
 bouton_accueil.pack(side="bottom")
+
+bouton_rejouer=Button(fenetre, text="Rejouer", command=lambda n=2: son(n))
+bouton_rejouer.pack(side="bottom")
+
+
 bouton_accueil.configure( width=15, height=3 )
 bouton_quitter.configure( width=15, height=3 )
 cadre = Frame(fenetre)

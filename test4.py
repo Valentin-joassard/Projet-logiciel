@@ -10,6 +10,10 @@ import subprocess
 def menus():
     fenetre.destroy()
     subprocess.run('python menuPrincipal.py')  
+def replay():
+    #enregistrer()
+    fenetre.destroy()
+    subprocess.run('python test4.py') 
 
 bx=0
 by=5
@@ -262,13 +266,13 @@ def deplacement():
     
     #if (canvas.coords(shot)[1]!=0):
         #print("oui")
-    print(Var1)
+    #print(Var1)
     if Var1==0:
         canvas.move(shot,dx,dy)
         destroy_bloc2(shot)
         fenetre.after(x,deplacement)
         #print(canvas.coords(shot))
-        print("yes")
+        #print("yes")
         Var1 = 1
         Var2 = 0
         if canvas.coords(shot) != []:
@@ -417,7 +421,11 @@ def lose(fin):
             Champion.place(x=405, y =400)
             meilleur_score = score
         enregistrer()
-        
+        FontBouton= tkFont.Font(family="Arial Black",size=15)
+        bouton_rejouer=Button(fenetre, text="Rejouer",bg='#404040',fg='#DB1702', command=lambda n=2: son(n))
+        bouton_rejouer.pack(side="bottom")
+        bouton_rejouer.configure(width=20, height=2,font=FontBouton )
+        bouton_rejouer.place(x=630, y =750)
         #raise SystemExit
 
 
@@ -476,7 +484,7 @@ def clavier(event):
                 #musique()
                 shot = canvas.create_oval(coords[0]-15,coords[1]+45,coords[0]+15,coords[1]+10,fill='red')
                 Var2=1
-                print(len(BRICK))
+                #print(len(BRICK))
                 deplacement()
                 xTir = coords[0]
                 yTir = coords[1]
@@ -503,6 +511,8 @@ def son(n):
         fenetre.after(1000,Quitter())
     if n==1:
         fenetre.after(1000,menus())
+    if n==2:
+        fenetre.after(1000,replay())
 # def musique():
     #musique_game = PlaySound("son/yes5.wav",SND_NODEFAULT)
 #---------------------------#
@@ -580,14 +590,19 @@ create_brick()
 descente()
 #destroy_bloc()
 
-bouton_quitter=Button(fenetre, text="Quitter", command=lambda n=0: son(n))
+bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='grey', command=lambda n=0: son(n))
 bouton_quitter.pack(side="bottom")
-bouton_accueil=Button(fenetre,text="Accueil",command=lambda n=1: son(n))
+bouton_accueil=Button(fenetre,text="Accueil",bg='#404040',fg='grey',command=lambda n=1: son(n))
 bouton_accueil.pack(side="bottom")
-bouton_accueil.configure( width=15, height=3 )
-bouton_quitter.configure( width=15, height=3 )
-cadre = Frame(fenetre)
-cadre.pack(side="bottom", fill=BOTH)
+
+FontBouton= tkFont.Font(family="Arial Black",size=15)
+bouton_accueil.configure( width=20, height=2,font=FontBouton )
+bouton_quitter.configure( width=20, height=2,font=FontBouton )
+bouton_quitter.place(x=930, y =750)
+#bouton_accueil.place(x=930, y =750)
+bouton_accueil.place(x=330, y =750)
+#cadre = Frame(fenetre)
+#bouton_rejouer.pack(side="bottom",ipady=100)
 
 fenetre.attributes('-fullscreen', True)
 
