@@ -38,6 +38,7 @@ anticheat2=0
 type_image=1
 Unlock1=0
 Unlock2=0
+Bonus=0
 #-------------------------------#
     #Enregistrement/chargement#
 #-------------------------------#
@@ -48,6 +49,7 @@ def enregistrer():
     var2= str(type_image)
     var3=str(Unlock1)
     var4=str(Unlock2)
+    var5=str(Bonus)
     mon_fichier = open("fichier.txt", "w")
     mon_fichier.write(var)
     mon_fichier.write("\n")
@@ -58,12 +60,14 @@ def enregistrer():
     mon_fichier.write(var3)
     mon_fichier.write("\n")
     mon_fichier.write(var4)
+    mon_fichier.write("\n")
+    mon_fichier.write(var5)
     mon_fichier.close()
 
 def charger():
-    global meilleur_score, piece,type_image,Unlock1,Unlock2
+    global meilleur_score, piece,type_image,Unlock1,Unlock2,Bonus
     with open("fichier.txt", "r") as fichier:
-        meilleur_score, piece,type_image,Unlock1,Unlock2 = [int(elt) for elt in fichier.readlines()]
+        meilleur_score, piece,type_image,Unlock1,Unlock2,Bonus = [int(elt) for elt in fichier.readlines()]
     
 #---------------------------#
          #fonctions#
@@ -542,6 +546,7 @@ fenetre = Tk()
 charger()
 TIR =[]
 BRICK= []
+x=x-Bonus
 # création du canvas
 #---------------------------#
          #image#

@@ -10,6 +10,7 @@ piece=0
 type_image=1
 Unlock1=0
 Unlock2=0
+Bonus=0
 def afficherpiece(piece):
     Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
@@ -29,9 +30,9 @@ def affichage_meilleur_score():
 
 
 def charger():
-    global meilleur_score, piece,type_image,Unlock1,Unlock2
+    global meilleur_score, piece,type_image,Unlock1,Unlock2,Bonus
     with open("fichier.txt", "r") as fichier:
-        meilleur_score, piece,type_image,Unlock1,Unlock2 = [int(elt) for elt in fichier.readlines()]
+        meilleur_score, piece,type_image,Unlock1,Unlock2,Bonus = [int(elt) for elt in fichier.readlines()]
 
 def Quitter():
     command=fenetre.quit()

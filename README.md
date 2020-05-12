@@ -14,3 +14,12 @@ Pour changer la résolution:
         Sélectionner: 125%
     Dans "Résolution de l'écran" :
         Sélectionner: 1920 x 1080
+
+
+fichier.txt
+    meilleur score
+    piece
+    image utilisée
+    achat effectué 1ere image
+    achat effectué 2eme image
+    Augmentation tir
