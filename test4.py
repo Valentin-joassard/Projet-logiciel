@@ -9,7 +9,7 @@ import subprocess
 #---------------------------#
 def menus():
     fenetre.destroy()
-    subprocess.run('python menuPrincipal.py')  
+    subprocess.run('python page-accueil.py')  
 def replay():
     #enregistrer()
     fenetre.destroy()
@@ -423,7 +423,7 @@ def lose(fin):
         enregistrer()
         FontBouton= tkFont.Font(family="Arial Black",size=15)
         bouton_rejouer=Button(fenetre, text="Rejouer",bg='#404040',fg='#DB1702', command=lambda n=2: son(n))
-        bouton_rejouer.pack(side="bottom")
+
         bouton_rejouer.configure(width=20, height=2,font=FontBouton )
         bouton_rejouer.place(x=630, y =750)
         #raise SystemExit
@@ -531,7 +531,7 @@ coupe=PhotoImage(file='image/coupe.png')
 explosion=PhotoImage(file='image/epee.png')
 p=PhotoImage(file='image/rocket1.png')
 f=PhotoImage(file='image/coeur.png')
-image=PhotoImage(file='image/espace5.png')
+#image=PhotoImage(file='image/espace5.png')
 titre=PhotoImage(file='image/titre.png')
 images=PhotoImage(file='image/espace5.png')
 down=PhotoImage(file='image/down.png')
@@ -591,9 +591,9 @@ descente()
 #destroy_bloc()
 
 bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='grey', command=lambda n=0: son(n))
-bouton_quitter.pack(side="bottom")
+
 bouton_accueil=Button(fenetre,text="Accueil",bg='#404040',fg='grey',command=lambda n=1: son(n))
-bouton_accueil.pack(side="bottom")
+
 
 FontBouton= tkFont.Font(family="Arial Black",size=15)
 bouton_accueil.configure( width=20, height=2,font=FontBouton )
