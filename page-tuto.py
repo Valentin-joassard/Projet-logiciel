@@ -5,23 +5,9 @@ import tkinter.font as tkFont
 from winsound import *
 import subprocess
 
-def enregistrer():
-    global meilleur_score, piece
-    var = str(meilleur_score)
-    var1 = str(piece)
-    mon_fichier = open("fichier.txt", "w")
-    mon_fichier.write(var)
-    mon_fichier.write("\n")
-    mon_fichier.write(var1)
-    mon_fichier.close()
 
-def charger():
-    global meilleur_score, piece
-    with open("fichier.txt", "r") as fichier:
-        meilleur_score, piece = [int(elt) for elt in fichier.readlines()]
         
 fenetre = Tk() 
-charger()
 TIR =[]
 BRICK= []
 

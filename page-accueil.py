@@ -7,7 +7,9 @@ import subprocess
 
 meilleur_score = 0
 piece=0
-
+type_image=1
+Unlock1=0
+Unlock2=0
 def afficherpiece(piece):
     Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
@@ -25,20 +27,11 @@ def affichage_meilleur_score():
     MeilleurScore.config(text='Meilleur score : ' + str(meilleur_score), font=fontStyle)
     MeilleurScore.place(x=1250, y =200)
 
-def enregistrer():
-    global meilleur_score, piece
-    var = str(meilleur_score)
-    var1 = str(piece)
-    mon_fichier = open("fichier.txt", "w")
-    mon_fichier.write(var)
-    mon_fichier.write("\n")
-    mon_fichier.write(var1)
-    mon_fichier.close()
 
 def charger():
-    global meilleur_score, piece
+    global meilleur_score, piece,type_image,Unlock1,Unlock2
     with open("fichier.txt", "r") as fichier:
-        meilleur_score, piece = [int(elt) for elt in fichier.readlines()]
+        meilleur_score, piece,type_image,Unlock1,Unlock2 = [int(elt) for elt in fichier.readlines()]
 
 def Quitter():
     command=fenetre.quit()
@@ -88,8 +81,6 @@ bg=PhotoImage(file='image/espace3.png')
 background= canvas.create_image(370,250,image=bg)
 canvas.pack()
 fenetre.attributes('-fullscreen', True)
-bouton_stop=Button(fenetre, text="Quitter",bg='#404040',fg='grey',command=fenetre.quit)
-bouton_stop.pack(side="bottom")
 
 bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='#0c136d', command=lambda n=0: son(n))
 bouton_play=Button(fenetre, text="Jouer",bg='#404040',fg='#0c136d', command=lambda n=1: son(n))
@@ -111,4 +102,5 @@ bouton_perso.place(x=625, y =320)
 charger()
 affichage_meilleur_score()
 afficherpiece(piece)
+musique_menu = PlaySound("son/accueil.wav", SND_ASYNC)
 fenetre.mainloop()

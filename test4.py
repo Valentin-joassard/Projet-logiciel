@@ -35,24 +35,36 @@ meilleur_score = 0
 anticheat=0
 anticheat1=0
 anticheat2=0
-
+type_image=1
+Unlock1=0
+Unlock2=0
 #-------------------------------#
     #Enregistrement/chargement#
 #-------------------------------#
 def enregistrer():
-    global meilleur_score, piece
+    global meilleur_score, piece,type_image,Unlock1,Unlock2
     var = str(meilleur_score)
     var1 = str(piece)
+    var2= str(type_image)
+    var3=str(Unlock1)
+    var4=str(Unlock2)
     mon_fichier = open("fichier.txt", "w")
     mon_fichier.write(var)
     mon_fichier.write("\n")
     mon_fichier.write(var1)
+    mon_fichier.write("\n")
+    mon_fichier.write(var2)
+    mon_fichier.write("\n")
+    mon_fichier.write(var3)
+    mon_fichier.write("\n")
+    mon_fichier.write(var4)
     mon_fichier.close()
 
 def charger():
-    global meilleur_score, piece
+    global meilleur_score, piece,type_image,Unlock1,Unlock2
     with open("fichier.txt", "r") as fichier:
-        meilleur_score, piece = [int(elt) for elt in fichier.readlines()]
+        meilleur_score, piece,type_image,Unlock1,Unlock2 = [int(elt) for elt in fichier.readlines()]
+    
 #---------------------------#
          #fonctions#
 #---------------------------#
@@ -515,6 +527,14 @@ def son(n):
         fenetre.after(1000,replay())
 # def musique():
     #musique_game = PlaySound("son/yes5.wav",SND_NODEFAULT)
+def choisir_image(type_image):
+    if type_image==1:
+        p=PhotoImage(file='image/rocket.png')
+    if type_image==2:
+        p=PhotoImage(file='image/rocket1.png')
+    if type_image==3:
+        p=PhotoImage(file='image/rocket2.png')
+    return p
 #---------------------------#
        #Code principal#
 #---------------------------#
@@ -529,7 +549,7 @@ BRICK= []
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
 explosion=PhotoImage(file='image/epee.png')
-p=PhotoImage(file='image/rocket1.png')
+
 f=PhotoImage(file='image/coeur.png')
 #image=PhotoImage(file='image/espace5.png')
 titre=PhotoImage(file='image/titre.png')
@@ -569,7 +589,7 @@ Up3=Label(fenetre,fg='#0c136d',bg="#404040")
 Up3.config(text="    chute    ", font=fontStyle)
 Up3.place(x=50,y=300)
 
-
+p=choisir_image(type_image)
 Titre.place(x=400, y =620)
 affichervie(Nvie1,Nvie2,Nvie3)
 affichagescore()
