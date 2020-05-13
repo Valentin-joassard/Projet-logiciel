@@ -38,13 +38,13 @@ def Quitter():
     command=fenetre.quit()
 def perso():    
     fenetre.destroy()
-    subprocess.run('python page-perso.py')
+    subprocess.run('python page/page-perso.py')
 def play(): 
     fenetre.destroy()
-    subprocess.run('python test4.py')
+    subprocess.run('python page/test4.py')
 def tuto(): 
     fenetre.destroy()
-    subprocess.run('python page-tuto.py')
+    subprocess.run('python page/page-tuto.py')
 
 def son(n):
     musique_bouton = PlaySound("son/souris_bouton.wav", SND_ASYNC)
