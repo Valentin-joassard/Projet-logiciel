@@ -23,3 +23,5 @@ fichier.txt
     achat effectué 1ere image
     achat effectué 2eme image
     Augmentation tir
+    Diminution Descentre
+    Augmentation vitesse
