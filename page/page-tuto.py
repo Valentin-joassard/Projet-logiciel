@@ -4,6 +4,11 @@ from random import randint
 import tkinter.font as tkFont
 from winsound import *
 import subprocess
+
+#---------------------------#
+    #Changement de pages#
+#---------------------------#
+
 def menus():
     fenetre.destroy()
     subprocess.run('python page/page-accueil.py')
@@ -18,7 +23,10 @@ def son(n):
         fenetre.after(1000,Quitter())
     if n==1:
         fenetre.after(1000,menus())
-        
+
+#---------------------------#
+    #Création images#
+#---------------------------#        
 fenetre = Tk() 
 
 titre=PhotoImage(file='image/titre.png')
@@ -26,7 +34,6 @@ images=PhotoImage(file='image/espace5.png')
 fonds=Label(fenetre,image=images)
 fonds.place(x=-205, y =-300)
 
-#fenetre.configure()
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 
 fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
@@ -45,6 +52,10 @@ brick1 = canvas.create_rectangle(30,450,60,480,fill="red")
 brick2 = canvas.create_rectangle(30,510,60,540,fill="blue")
 brick3 = canvas.create_rectangle(400,450,430,480,fill="yellow")
 brick4 = canvas.create_rectangle(400,510,430,540,fill="green")
+
+#---------------------------#
+    #Affichage des labels#
+#---------------------------#
 
 roleTouche=Label(fenetre,fg='#0c136d',bg="#404040")
 roleTouche.config(text="Les commandes", font=fontStyle)
@@ -98,6 +109,9 @@ Brick4.place(x=830,y=510)
 canvas.pack()
 fenetre.attributes('-fullscreen', True)
 
+#---------------------------#
+    #Création boutons#
+#---------------------------#
 
 bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='grey',command=lambda n=0: son(n))
 bouton_quitter.configure( width=20, height=2,font=FontBouton )

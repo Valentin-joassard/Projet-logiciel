@@ -5,6 +5,10 @@ import tkinter.font as tkFont
 from winsound import *
 import subprocess
 
+#---------------------------#
+      #Variable Globale#
+#---------------------------#
+
 meilleur_score = 0
 piece=0
 type_image=1
@@ -13,11 +17,15 @@ Unlock2=0
 BonusTir=0
 BonusDescente=0
 BonusDeplacement=0
+
+#---------------------------#
+        #Affichage#
+#---------------------------#
+
 def afficherpiece(piece):
     Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
     fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
-    #print(score)
     Credit.config(text='Pieces : ' + str(piece), font=fontStyle)
     Credit.place(x=1300, y =100)
 
@@ -36,17 +44,32 @@ def charger():
     with open("fichier.txt", "r") as fichier:
         meilleur_score, piece,type_image,Unlock1,Unlock2,BonusTir,BonusDescente,BonusDeplacement = [int(elt) for elt in fichier.readlines()]
 
+#---------------------------#
+    #Changement de pages#
+#---------------------------#
+
 def Quitter():
     command=fenetre.quit()
+
+
 def perso():    
     fenetre.destroy()
     subprocess.run('python page/page-perso.py')
+
+
 def play(): 
     fenetre.destroy()
-    subprocess.run('python page/test4.py')
+    subprocess.run('python page/page-jouer.py')
+
+
 def tuto(): 
     fenetre.destroy()
     subprocess.run('python page/page-tuto.py')
+
+
+#---------------------------#
+        #Son bouton#
+#---------------------------#
 
 def son(n):
     musique_bouton = PlaySound("son/souris_bouton.wav", SND_ASYNC)
@@ -60,8 +83,10 @@ def son(n):
         fenetre.after(1000,perso())        
 fenetre = Tk() 
 charger()
-TIR =[]
-BRICK= []
+
+#---------------------------#
+      #Création images#
+#---------------------------#
 
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
@@ -71,9 +96,7 @@ images=PhotoImage(file='image/espace5.png')
 fonds=Label(fenetre,image=images)
 fonds.place(x=-205, y =-300)
 
-#fenetre.configure()
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
-# coordonnées initiales
 
 fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
 MeilleurScore = Label(fenetre, fg ='#FFD700',bg="#404040")
@@ -84,6 +107,10 @@ bg=PhotoImage(file='image/espace3.png')
 background= canvas.create_image(370,250,image=bg)
 canvas.pack()
 fenetre.attributes('-fullscreen', True)
+
+#---------------------------#
+      #Création bouton#
+#---------------------------#
 
 bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='#0c136d', command=lambda n=0: son(n))
 bouton_play=Button(fenetre, text="Jouer",bg='#404040',fg='#0c136d', command=lambda n=1: son(n))

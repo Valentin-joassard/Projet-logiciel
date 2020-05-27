@@ -5,6 +5,10 @@ import tkinter.font as tkFont
 from winsound import *
 import subprocess
 
+#---------------------------#
+      #Variable Globale#
+#---------------------------#
+
 meilleur_score = 0
 piece=0
 type_image=1
@@ -16,6 +20,10 @@ BonusTir=0
 BonusDescente=0
 BonusDeplacement=0
 
+#---------------------------#
+    #Changement de pages#
+#---------------------------#
+
 def menus():
     fenetre.destroy()
     subprocess.run('python page/page-accueil.py')
@@ -25,7 +33,11 @@ def Quitter():
 
 def Play():
     fenetre.destroy()
-    subprocess.run('python page/test4.py')
+    subprocess.run('python page/page-jouer.py')
+
+#---------------------------#
+        #Son bouton#
+#---------------------------#
 
 def son(n):
     global piece,Unlock1,type_image,Unlock2,BonusTir,BonusDeplacement,BonusDescente
@@ -73,6 +85,10 @@ def son(n):
         choisir_image(Unlock1,Unlock2,BonusTir,BonusDeplacement,BonusDescente)
 
     enregistrer()
+
+#---------------------------#
+        #Skin et UP#
+#---------------------------#
 
 def choisir_image(Unlock1,Unlock2,BonusTir,BonusDeplacement,BonusDescente):
     global p1,p2,p3,Bonus1,Bonus2,Bonus3
@@ -147,11 +163,14 @@ def choisir_image(Unlock1,Unlock2,BonusTir,BonusDeplacement,BonusDescente):
         bouton_upDescente.configure( width=10, height=2,font=FontBouton )
         bouton_upDescente.place(x=440, y =480)
 
+#---------------------------#
+        #Affichage#
+#---------------------------#
+
 def afficherpiece(piece):
     Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
     fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
-    #print(score)
     Credit.config(text='Pieces : ' + str(piece), font=fontStyle)
     Credit.place(x=1300, y =100)
 
@@ -163,6 +182,10 @@ def affichage_meilleur_score():
     
     MeilleurScore.config(text='Meilleur score : ' + str(meilleur_score), font=fontStyle)
     MeilleurScore.place(x=1250, y =200)
+
+#---------------------------#
+    #Enregistrer/Charger#
+#---------------------------#
 
 def enregistrer():
     global meilleur_score, piece,type_image,Unlock1,Unlock2
@@ -196,12 +219,15 @@ def charger():
     global meilleur_score, piece,type_image,Unlock1,Unlock2,BonusTir,BonusDescente,BonusDeplacement
     with open("fichier.txt", "r") as fichier:
         meilleur_score, piece,type_image,Unlock1,Unlock2,BonusTir,BonusDescente,BonusDeplacement = [int(elt) for elt in fichier.readlines()]
-        
+
+#---------------------------#
+      #Création images#
+#---------------------------#
+       
 fenetre = Tk() 
 
 charger()
 
-TIR =[]
 BRICK= []
 
 coin=PhotoImage(file='image/coin.png')
@@ -211,12 +237,13 @@ titre=PhotoImage(file='image/titre.png')
 images=PhotoImage(file='image/espace5.png')
 fonds=Label(fenetre,image=images)
 fonds.place(x=-205, y =-300)
-
-#fenetre.configure()
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
-# coordonnées initiales
 
 fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
+
+#---------------------------#
+    #Affichage des labels#
+#---------------------------#
 
 Prix1=Label(fenetre,fg='#FFD700',bg="#404040")
 Prix1.config(text="            Prix 250            ", font=fontStyle)
@@ -254,6 +281,10 @@ afficherpiece(piece)
 p3=PhotoImage(file='image/Drocket1.png')
 p1=PhotoImage(file='image/Drocket.png')
 p2=PhotoImage(file='image/Drocket2.png')
+
+#---------------------------#
+      #Création boutons#
+#---------------------------#
 
 choisir_image(Unlock1,Unlock2,BonusTir,BonusDeplacement,BonusDescente)
 bouton_play=Button(fenetre, text="Play",bg='#404040',fg='#0c136d', command=lambda n=8: son(n))

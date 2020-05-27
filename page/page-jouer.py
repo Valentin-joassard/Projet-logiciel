@@ -10,7 +10,7 @@ def menus():
     subprocess.run('python page/page-accueil.py')  
 def replay():
     fenetre.destroy()
-    subprocess.run('python page/test4.py') 
+    subprocess.run('python page/page-jouer.py') 
 
 #---------------------------#
       #Variable Globale#
@@ -79,10 +79,11 @@ def charger():
     global meilleur_score, piece,type_image,Unlock1,Unlock2,BonusTir,BonusDescente,BonusDeplacement
     with open("fichier.txt", "r") as fichier:
         meilleur_score, piece,type_image,Unlock1,Unlock2,BonusTir,BonusDescente,BonusDeplacement = [int(elt) for elt in fichier.readlines()]
-    
+
 #---------------------------#
-         #fonctions#
+      # Affichage UI #
 #---------------------------#
+
 def afficherpiece(piece):
     Coin=Label(fenetre,image=coin,bg="#404040")
     Coin.place(x=1250, y =100)
@@ -141,6 +142,9 @@ def affichervie(Nvie1,Nvie2,Nvie3):
     Vie.config(text=' Vie : ', font=fontStyle)
     Vie.place(x=100, y =100)
 
+#--------------------------------------------------------#
+      # Chute et apparation qui change au fil du temps #
+#--------------------------------------------------------#
 
 def vitesse_chute():
     
@@ -164,6 +168,11 @@ def vitesse_apparition():
         vitesseapparition=vitesseapparition-5
     if vitesseapparition>700 and vitesseapparition<801:
         vitesseapparition=vitesseapparition-1
+
+#---------------------------#
+      # Création bloc #
+#---------------------------#
+
 def create_brick():
     if fin!=0:
         global brick,x1,x2,var3
@@ -185,7 +194,11 @@ def create_brick():
         BRICK.append([brick,type])
         vitesse_apparition()
         fenetre.after(vitesseapparition,create_brick)
-        
+
+#---------------------------#
+      # Bonus - Malus #
+#---------------------------#        
+
 def up_vit_tir():
     global x
     x = 2
@@ -258,6 +271,9 @@ def restat_up_vit_dep():
     if anticheat==0:
         Up_vit1.place_forget()
 
+#---------------------------#
+      # Deplacement du tir #
+#---------------------------#
 
 def deplacement():
 
@@ -276,6 +292,9 @@ def deplacement():
                 Var1=1
                 Var2=0
 
+#---------------------------#
+    # Destruction blocs #
+#---------------------------#
 
 def destroy_bloc(shot):
     global Var1,Var2,score,x,by
@@ -310,7 +329,9 @@ def destroy_bloc(shot):
                     Var2=0
 
 
-
+#---------------------------#
+      # Descente bloc #
+#---------------------------#
 
 def descente():
     global bx,by,fin
@@ -333,9 +354,9 @@ def descente():
         vitesse_chute()
         fenetre.after(vitessechute,descente)
 
-def supprimer_bloc(BLOC,num_list_del):
-    del BLOC[num_list_del]
-    return BLOC
+#---------------------------#
+      # Fonctions lose #
+#---------------------------#
 
 def lose(fin):
     global meilleur_score, score
@@ -358,32 +379,9 @@ def lose(fin):
         bouton_rejouer.configure(width=20, height=2,font=FontBouton )
         bouton_rejouer.place(x=630, y =750)
 
-
-
-def Descendre_Bloc(BLOC):
-    nbr_list_max=len(BLOC)
-    nbr_list = 0
-	
-    while nbr_list!=nbr_list_max:
-	    BLOC [nbr_list][1]=BLOC [nbr_list][1] -1
-	    nbr_list= nbr_list + 1
-    return BLOC
-
-def creer_bloc():
-    proba = randint(0,100)
-    if (proba >=0 and proba<=70):
-        type = 0
-        valeur = 1
-    if (proba >70 and proba<=80):
-        type = 1
-        valeur = 1
-    if (proba >80 and proba<=90):
-        type = 2
-        valeur = 1
-    if (proba >90 and proba<=100):
-        type = 3
-        valeur = 1
-    return type and valeur
+#---------------------------#
+    # Déplacement du joueur #
+#---------------------------#
 
 def clavier(event):
     global coords, shot, Var1, Var2, gauche, droite,fin
@@ -408,9 +406,16 @@ def clavier(event):
                 TIR.append([xTir,yTir])
             canvas.coords(p, coords[0], coords[1], coords[0]+25, coords[1]+25)
             fenetre.update()
+#---------------------------#
+      # Quitter #
+#---------------------------#
 
 def Quitter():
     command=fenetre.quit()
+
+#---------------------------#
+      # Son #
+#---------------------------#
     
 def son(n):
     musique_bouton = PlaySound("son/souris_bouton.wav", SND_ASYNC)
@@ -420,6 +425,9 @@ def son(n):
         fenetre.after(1000,menus())
     if n==2:
         fenetre.after(1000,replay())
+#---------------------------#
+      # Choix skin #
+#---------------------------#
 
 def choisir_image(type_image):
     if type_image==1:
@@ -442,12 +450,11 @@ droite=droite+BonusDeplacement
 gauche=gauche-BonusDeplacement
 
 #---------------------------#
-         #image#
+         #Images#
 #---------------------------#
 coin=PhotoImage(file='image/coin.png')
 coupe=PhotoImage(file='image/coupe.png')
 explosion=PhotoImage(file='image/epee.png')
-
 f=PhotoImage(file='image/coeur.png')
 titre=PhotoImage(file='image/titre.png')
 images=PhotoImage(file='image/espace5.png')
@@ -460,6 +467,11 @@ fonds.place(x=-205, y =-300)
 canvas =Canvas(fenetre, width=768, height=576, bg="ivory")
 coords = (390,520)
 fontStyle = tkFont.Font(family="Eras Demi ITC", size=20)
+
+#---------------------------#
+      # Affichage Label #
+#---------------------------#
+
 MeilleurScore = Label(fenetre, fg ='#FFD700',bg="#404040")
 Vie = Label(fenetre, fg ='#0c136d',bg='#404040')
 Resultat = Label(fenetre, fg ='#0c136d',bg='#404040')
@@ -500,12 +512,13 @@ canvas.pack()
 create_brick()
 descente()
 
-bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='grey', command=lambda n=0: son(n))
-
-bouton_accueil=Button(fenetre,text="Accueil",bg='#404040',fg='grey',command=lambda n=1: son(n))
-
+#---------------------------#
+    # Création boutons #
+#---------------------------#
 
 FontBouton= tkFont.Font(family="Arial Black",size=15)
+bouton_quitter=Button(fenetre, text="Quitter",bg='#404040',fg='grey', command=lambda n=0: son(n))
+bouton_accueil=Button(fenetre,text="Accueil",bg='#404040',fg='grey',command=lambda n=1: son(n))
 bouton_accueil.configure( width=20, height=2,font=FontBouton )
 bouton_quitter.configure( width=20, height=2,font=FontBouton )
 bouton_quitter.place(x=930, y =750)
